@@ -14,7 +14,7 @@ import { BlurView } from 'expo-blur';
 import Seeallticket from './Screens/Seeallticket';
 import LoginScreen from './Screens/LoginScreen'
 import WelcomeH from './Screens/WelcomeH'
-
+import SeeAll from './Screens/SeeAll'
 
 const SrackNavigator = () => {
     const Tab = createBottomTabNavigator();
@@ -108,7 +108,7 @@ const SrackNavigator = () => {
                 <Stack.Screen name="WelcomeH" component={WelcomeH} options={{ headerShown: false }} />
 
                 <Stack.Screen name="main" component={BotttomTabs} options={{ headerShown: false }} />
-                <Stack.Screen name="see all" component={Seeallticket} options={{ headerShown: false }} />
+                <Stack.Screen name="SeeAll" component={SeeAll} options={{ headerShown: false }} />
                 <Stack.Screen name="tikcet" component={TicketScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
             </Stack.Navigator>
