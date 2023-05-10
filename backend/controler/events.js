@@ -11,7 +11,7 @@ module.exports = {
         events.add(function(err, results) {
             if(err) res.status(500).send(err);
             else res.json(results)
-        },[req.body])
+        },req.body)
     },
     getOneEvent: function(req, res) {
         events.getOne(function(err, results) {

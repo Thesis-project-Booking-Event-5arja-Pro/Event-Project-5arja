@@ -22,11 +22,11 @@ module.exports = {
     },
 
  deleteOnepost: function(req, res) {
-    console.log(req.params.idpost);
+    console.log(req.params.id);
         post.deleteOne(function(err, results) {
             if(err) res.status(500).send(err);
             else res.json(results)
-        },[req.params.idpost])
+        },[req.params.id])
     
     }
 }

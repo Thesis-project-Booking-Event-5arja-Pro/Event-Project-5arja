@@ -11,7 +11,7 @@ module.exports = {
     },
       
       getOne: function(callback,id) {
-        const sql = 'SELECT * FROM ticket where idticket =?'
+        const sql = 'SELECT * FROM ticket where id =?'
       conn.query(sql,id,function (error, results) {
         callback(error, results);
       });
@@ -25,7 +25,7 @@ module.exports = {
         });  
       },
       deleteOne: function(callback,idticket) {
-        const sql = 'DELETE FROM ticket WHERE idticket = ?' 
+        const sql = 'DELETE FROM ticket WHERE id = ?' 
         conn.query(sql,idevent,function (error, results ) {
           callback(error, results);
         });

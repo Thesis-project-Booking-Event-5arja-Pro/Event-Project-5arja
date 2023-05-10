@@ -22,11 +22,11 @@ module.exports = {
     },
 
  deleteOneclient: function(req, res) {
-    console.log(req.params.idevent);
+    console.log(req.params.id);
         client.deleteOne(function(err, results) {
             if(err) res.status(500).send(err);
             else res.json(results)
-        },[req.params.idevent])
+        },[req.params.id])
     
     }
 }

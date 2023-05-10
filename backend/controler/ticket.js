@@ -26,7 +26,7 @@ module.exports = {
         ticket.deleteOne(function(err, results) {
             if(err) res.status(500).send(err);
             else res.json(results)
-        },[req.params.idtecket])
+        },[req.params.id])
     
     }
 }

@@ -25,7 +25,7 @@ module.exports = {
         });  
       },
       deleteOne: function(callback,idcomments) {
-        const sql = 'DELETE FROM comments WHERE idcomments = ?' 
+        const sql = 'DELETE FROM comments WHERE id  = ?' 
         conn.query(sql,idcomments,function (error, results ) {
           callback(error, results);
         });

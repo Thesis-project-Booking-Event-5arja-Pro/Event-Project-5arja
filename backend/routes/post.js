@@ -6,8 +6,8 @@ const { getAllpost, addpost, getOnepost ,deleteOnepost} = require('../controler/
 
 
 router.get('/getAllpost', getAllpost);
-router.get('/:idpost', getOnepost);
+router.get('/:id', getOnepost);
 router.post('/addpost', addpost);
-router.delete('/:idpost', deleteOnepost)
+router.delete('/:id', deleteOnepost)
 
 module.exports = router;

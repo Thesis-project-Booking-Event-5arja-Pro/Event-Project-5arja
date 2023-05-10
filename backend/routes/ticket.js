@@ -6,8 +6,8 @@ const { getAllticket, addticket, getOneticket ,deleteOneticket} = require('../co
 
 
 router.get('/getAllticket', getAllticket);
-router.get('/:idticket', getOneticket);
+router.get('/:id', getOneticket);
 router.post('/addticket', addticket);
-router.delete('/:idticket', deleteOneticket)
+router.delete('/:id', deleteOneticket)
 
 module.exports = router;

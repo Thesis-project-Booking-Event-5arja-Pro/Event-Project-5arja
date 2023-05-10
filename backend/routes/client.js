@@ -7,8 +7,8 @@ const { getAllclient, addclient, getOneclient , deleteOneclient} = require('../c
 
 
 router.get('/getAllclient', getAllclient);
-router.get('/:idclient', getOneclient);
+router.get('/:id', getOneclient);
 router.post('/addclient', addclient);
-router.delete('/:idclient', deleteOneclient)
+router.delete('/:id', deleteOneclient)
 
 module.exports = router;

@@ -11,7 +11,7 @@ module.exports = {
     },
       
       getOne: function(callback,id) {
-        const sql = 'SELECT * FROM client where idclient =?'
+        const sql = 'SELECT * FROM client where id =?'
       conn.query(sql,id,function (error, results) {
         callback(error, results);
       });
@@ -25,7 +25,7 @@ module.exports = {
         });  
       },
       deleteOne: function(callback,idclient) {
-        const sql = 'DELETE FROM client WHERE idclient = ?' 
+        const sql = 'DELETE FROM client WHERE id = ?' 
         conn.query(sql,idclient,function (error, results ) {
           callback(error, results);
         });

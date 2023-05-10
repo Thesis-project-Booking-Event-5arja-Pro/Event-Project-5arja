@@ -11,7 +11,7 @@ module.exports = {
     },
       
       getOne: function(callback,id) {
-        const sql = 'SELECT * FROM post where idpost =?'
+        const sql = 'SELECT * FROM post where id =?'
       conn.query(sql,id,function (error, results) {
         callback(error, results);
       });
@@ -25,7 +25,7 @@ module.exports = {
         });  
       },
       deleteOne: function(callback,idpost) {
-        const sql = 'DELETE FROM post WHERE idpost = ?' 
+        const sql = 'DELETE FROM post WHERE id = ?' 
         conn.query(sql,idevent,function (error, results ) {
           callback(error, results);
         });

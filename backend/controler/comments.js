@@ -22,11 +22,11 @@ module.exports = {
     },
 
  deleteOnecomments: function(req, res) {
-    console.log(req.params.idevent);
+    console.log(req.params.id);
         comments.deleteOne(function(err, results) {
             if(err) res.status(500).send(err);
             else res.json(results)
-        },[req.params.idevent])
+        },[req.params.id])
     
     }
 }

@@ -6,8 +6,8 @@ const { getAllEvent, addEvent, getOneEvent ,deleteOneEvent} = require('../contro
 
 
 router.get('/getAllevent', getAllEvent);
-router.get('/:idevent', getOneEvent);
+router.get('/:id', getOneEvent);
 router.post('/addevent', addEvent);
-router.delete('/:idevent', deleteOneEvent)
+router.delete('/:id', deleteOneEvent)
 
 module.exports = router;

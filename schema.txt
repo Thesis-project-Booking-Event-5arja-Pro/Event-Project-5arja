@@ -1,0 +1,182 @@
+CREATE SCHEMA IF NOT EXISTS ED DEFAULT CHARACTER SET utf8 ;
+USE ED ;
+
+-- -----------------------------------------------------
+-- Table ED.`client`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS ED.`client` (
+  id INT NOT NULL AUTO_INCREMENT,
+  firstName VARCHAR(45) NOT NULL,
+  lastName VARCHAR(45) NOT NULL,
+  email VARCHAR(45) NOT NULL,
+  password VARCHAR(45) NOT NULL,
+  phoneNumber VARCHAR(45) NOT NULL,
+  location VARCHAR(45) NOT NULL,
+  friendList LONGTEXT NULL,
+  historyEvent VARCHAR(45) NULL,
+  address LONGTEXT NOT NULL,
+  img LONGTEXT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table ED.`event_planer`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS ED.`event_planer` (
+  id INT NOT NULL AUTO_INCREMENT,
+  firstName VARCHAR(45) NOT NULL,
+  lastName VARCHAR(45) NOT NULL,
+  email VARCHAR(45) NOT NULL,
+  password VARCHAR(45) NOT NULL,
+  phoneNumber VARCHAR(45) NOT NULL,
+  CIN VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table ED.`event`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS ED.`event` (
+  id INT NOT NULL AUTO_INCREMENT,
+  eventName VARCHAR(45) NOT NULL,
+  img LONGTEXT NOT NULL,
+  video LONGTEXT NULL,
+  description LONGTEXT NOT NULL,
+  date DATETIME NOT NULL,
+  price INT NOT NULL,
+  grade INT NOT NULL,
+  category VARCHAR(45) NOT NULL,
+  eventPlaner_id INT NOT NULL,
+  PRIMARY KEY (id),
+  INDEX fk_event_event_planer_idx (eventPlaner_id ASC) VISIBLE,
+  CONSTRAINT fk_event_event_planer
+    FOREIGN KEY (eventPlaner_id)
+    REFERENCES ED.`event_planer` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table ED.`admin`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS ED.`admin` (
+  id INT NOT NULL AUTO_INCREMENT,
+  email VARCHAR(45) NOT NULL,
+  password VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table ED.`post`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS ED.`post` (
+  id INT NOT NULL AUTO_INCREMENT,
+  description LONGTEXT NOT NULL,
+  likes INT NOT NULL,
+  client_id INT NOT NULL,
+  PRIMARY KEY (id),
+  INDEX fk_post_client_idx (client_id ASC) VISIBLE,
+  CONSTRAINT fk_post_client
+    FOREIGN KEY (client_id)
+    REFERENCES ED.`client` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table ED.`comments`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS ED.`comments` (
+  id INT NOT NULL AUTO_INCREMENT,
+  description LONGTEXT NOT NULL,
+  likes INT NULL,
+  post_id INT NOT NULL,
+  client_id INT NOT NULL,
+  PRIMARY KEY (id),
+  INDEX fk_comments_post_idx (post_id ASC) VISIBLE,
+  INDEX fk_comments_client_idx (client_id ASC) VISIBLE,
+  CONSTRAINT fk_comments_post
+    FOREIGN KEY (post_id)
+    REFERENCES ED.`post` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_comments_client
+    FOREIGN KEY (client_id)
+    REFERENCES ED.`client` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table ED.`feedback`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS ED.`feedback` (
+  id INT NOT NULL AUTO_INCREMENT,
+  description LONGTEXT NOT NULL,
+  rating INT NOT NULL,
+  client_id INT NOT NULL,
+  PRIMARY KEY (id),
+  INDEX fk_feedback_client_idx (client_id ASC) VISIBLE,
+  CONSTRAINT fk_feedback_client
+    FOREIGN KEY (client_id)
+    REFERENCES ED.`client` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table ED.`ticket`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS ED.`ticket` (
+  id INT NOT NULL AUTO_INCREMENT,
+  date DATETIME NOT NULL,
+  price INT NOT NULL,
+  seatNumber INT NOT NULL,
+  isSold BOOLEAN NOT NULL DEFAULT 0,
+  client_id INT NULL,
+  event_id INT NOT NULL,
+  PRIMARY KEY (id),
+  INDEX fk_ticket_client_idx (client_id ASC) VISIBLE,
+  INDEX fk_ticket_event_idx (event_id ASC) VISIBLE,
+  CONSTRAINT fk_ticket_client
+    FOREIGN KEY (client_id)
+    REFERENCES ED.`client` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_ticket_event
+    FOREIGN KEY (event_id)
+    REFERENCES ED.`event` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table ED.`event_attendance`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS ED.`event_attendance` (
+  id INT NOT NULL AUTO_INCREMENT,
+  client_id INT NOT NULL,
+  event_id INT NOT NULL,
+  PRIMARY KEY (id),
+  INDEX fk_event_attendance_client_idx (client_id ASC) VISIBLE,
+  INDEX fk_event_attendance_event_idx (event_id ASC) VISIBLE,
+  CONSTRAINT fk_event_attendance_client
+    FOREIGN KEY (client_id)
+    REFERENCES ED.`client` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_event_attendance_event
+    FOREIGN KEY (event_id)
+    REFERENCES ED.`event` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;

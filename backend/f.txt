@@ -1,0 +1,40 @@
+"eventname": "nouba",
+  "img": "LONGTEXT NOT NULL",
+  "video" :"LONGTEXT NULL",
+  "describtion": "LONGTEXT NOT NULL",
+  "date": "25/5/12",
+  "price": 25,
+  "grade" :25,
+  "catgorie" :"VARCHAR(45) NOT NULL"
+   "eventname": "nouba",
+  "event planer_id":1,
+  "img": "dsdsdsd",
+  "video" :"LONGTEXT NULL",
+  "describtion":"LONGTEXT NOT NULL",
+  "date":"2023-4-26",
+  "price":25,
+  "grade" :25,
+  "catgorie":"VARCHAR(45) NOT NULL"
+
+
+
+ 
+  "eventName": "noba",
+  "img":"LONGTEXT NOT NULL",
+  "description":"LONGTEXT NOT NULL",
+  "date":"2023-04-28 15:07:42",
+  "price":123,
+  "grade":1,
+  "category":"VARCHAR(45) NOT NULL",
+  "eventPlaner_id":1
+
+ "eventName":"tozer-camping",
+  "img":"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tripadvisor.fr%2FHotels-g293753-c3-zff29-Tunisia-Hotels.html&psig=AOvVaw3n31VggvudQvUCqb5sp1g1&ust=1683108137681000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCID_hMiw1v4CFQAAAAAdAAAAABAE",
+  "video":"https://www.youtube.com/watch?v=YDtybPxMp7A",
+  "description":"Looking for an authentic and memorable experience for your next vacation? Join us for a camping event in the Sahara of Tozeur, Tunisia! Come discover the natural beauty of this breathtaking desert landscape, explore the golden sand dunes and spectacular rock formations, and immerse yourself in the local culture and traditions. With exciting activities, evenings around the campfire, and delicious meals prepared by local chefs, you're sure to have unforgettable outdoor experiences. Register now to join our adventure in the desert!",
+  "date":"2023-05-02 07:30:00",
+  "price":50,
+  "grade":10,
+  "category":"camping",
+  "admin_id":1
+  

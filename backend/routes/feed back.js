@@ -6,8 +6,8 @@ const { getAllfeedback, addfeedback, getOnefeedback , deleteOnefeedback} = requi
 
 
 router.get('/getAllfeedback', getAllfeedback);
-router.get('/:idfeedback', getOnefeedback);
+router.get('/:id', getOnefeedback);
 router.post('/addfeedback', addfeedback);
-router.delete('/:idfeedback', deleteOnefeedback)
+router.delete('/:id', deleteOnefeedback)
 
 module.exports = router;
