@@ -9,6 +9,13 @@ import { Video, ResizeMode } from 'expo-av';
 
 const WelcomeH = ({ navigation }) => {
 
+    const handleshow = (x)=>{
+        
+
+    }
+
+
+
 
     return (
 

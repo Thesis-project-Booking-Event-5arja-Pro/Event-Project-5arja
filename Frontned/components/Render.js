@@ -29,11 +29,7 @@ const Render = () => {
     const renderItem = ({ item, index }) => (
         <TouchableOpacity onPress={() => handleImagePress(item)}>
             <View style={{ marginLeft: 20 }}>
-<<<<<<< HEAD
                 <ImageBackground source={{ uri: item.title }}  resizeMode='cover' style={{ width: 330, height: 350, marginTop: 20 }} />
-=======
-                <ImageBackground source={{ uri: item.title }} resizeMode='cover' style={{ width: 330, height: 350, marginTop: 10 }} />
->>>>>>> 7f05c75d92c992ac0a3ac6ca0c9f6845d2dbbf49
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: 20, marginTop: -80 }}>
                     <View>
                         <McText h2>Tale of us</McText>
@@ -49,9 +45,9 @@ const Render = () => {
     return (
         <View>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
-                <McText dd black style={{ marginLeft: 10, fontSize: 17, fontWeight: 700, marginTop: 10 }}>POPULAR EVENTS</McText>
+                <McText dd black style={{ marginLeft: 10, fontSize: 17, fontWeight: 700, marginTop: 60 }}>POPULAR EVENTS</McText>
                 <TouchableOpacity onPress={handleSeeAllPress}>
-                    <McText style={{ marginLeft: 165, textDecorationLine: 'underline' }}>See all</McText>
+                    <McText style={{ marginLeft: 188, textDecorationLine: 'underline', marginTop: 55 }}>See all</McText>
                 </TouchableOpacity>
             </View>
             <FlatList
@@ -59,7 +55,7 @@ const Render = () => {
                 contentContainerStyle={{}}
                 data={DATA}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id} 
             />
 
 

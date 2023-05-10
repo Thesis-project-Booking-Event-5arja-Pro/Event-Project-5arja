@@ -4,14 +4,39 @@ import { McText, McIcon, McAvatar } from '../comp'
 import { Text, View, StyleSheet, Button, SafeAreaView, Image, TextInput } from 'react-native'
 import React, { useState, useEffect } from 'react';
 import { Svg, Path } from 'react-native-svg';
+import { Ionicons } from '@expo/vector-icons';
+
+
+
+
+
+
+
 
 
 const Header = () => {
-    const today = new Date();
-    const dateString = today.toDateString()
+    const API_KEY = '244299d2237389563a6bb563cce0b0c25';
+
+    const IPSTACK_API_ENDPOINT = `http://api.ipstack.com/check?access_key=${API_KEY}`;
+    const [adress, setAdress] = useState("")
+
+    useEffect(() => {
+        fetch(IPSTACK_API_ENDPOINT)
+            .then(response => response.json())
+            .then(data => {
+                setAdress(data.country_code + ',' + data.city);
+            })
+            .catch(error => console.log(error));
+
+        console.log(adress);
+
+
+    }, [])
+
+
     return (
         <SafeAreaView style={styles.container}>
-              
+
 
 
             <SectionHeader>
@@ -35,17 +60,22 @@ const Header = () => {
 
             </SectionHeader>
 
-            <SectionHeader style={{ marginTop: -43, marginLeft: 15 }}>
-                <SectionSearch >
-                    <SearchView >
-
-                        <TextInput style={{ width: 230, color: "white", fontSize: 17, }} placeholder="Search For events" placeholderTextColor={COLORS.lightGray} ></TextInput>
-                        <McIcon source={icons.search}></McIcon>
-                    </SearchView>
+            {adress && adress !=="undefined,undefined" && <SectionHeader >
 
 
-                </SectionSearch>
-            </SectionHeader>
+
+
+
+<Text style={{ color: "white", fontSize: 18, marginLeft: 130, marginTop: -15 , fontWeight:"bold" }}>{ adress}</Text>
+  <Ionicons name="location" size={23} color="white" style={{ marginTop: -19, marginLeft: 6}} />
+
+
+
+
+
+</SectionHeader>}
+
+            
 
 
         </SafeAreaView>
@@ -53,7 +83,7 @@ const Header = () => {
 };
 const SectionHeader = styled.View`
 padding : 15px ${SIZES.padding};
-justify-content : space-between;
+
 fontSize:30px;
 flex-direction:row
 
@@ -62,29 +92,13 @@ flex-direction:row
 
 `;
 
-const SectionSearch = styled.View`
-margin: 15px ${SIZES.padding};
-margin-left : 5px
-height: 48px;
-background-color: ${COLORS.input};
-border-radius: 15px;
 
 
 
-`;
-
-const SearchView = styled.View`
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
-padding-top:15px
-padding-right:18px
-padding-left:20
-color:white
 
 
 
-`;
+
 
 
 const styles = StyleSheet.create({

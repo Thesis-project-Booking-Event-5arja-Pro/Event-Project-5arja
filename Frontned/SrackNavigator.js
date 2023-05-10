@@ -153,111 +153,110 @@ import Singnup from './Screens/Singnup'
 
 
 const StackNavigator = () => {
-    const Tab = createBottomTabNavigator();
-    const Stack = createNativeStackNavigator();
-  
-    function BotttomTabs() {
-      return (
-        <Tab.Navigator
-          screenOptions={{
-            tabBarStyle: styles.bottomTabBar,
-          }}
-        >
-          <Tab.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-              tabBarLabel: "Home",
-              headerShown: false,
-              tabBarIcon: ({ focused }) =>
-                focused ? (
-                  <Entypo name="home" size={34} color="#FFB703" style={{ margin: 0 }} />
-                ) : (
-                  <AntDesign name="home" size={28} color="white" style={{ margin: 0 }} />
-                ),
-              tabBarLabelStyle: {
-                fontSize: 13,
-                fontWeight: "600",
-                color: "#FFB703",
-              },
-            }}
-          />
-          <Tab.Screen
-            name="account"
-            component={Singnup}
-            options={{
-              tabBarButton: () => null, // Hide the tab button
-              tabBarLabelStyle: { display: "none" }, // Hide the tab label
-            }}
-          />
-          <Tab.Screen
-            name="ticket"
-            component={TicketScreen}
-            options={{
-              tabBarLabel: "ticket",
-              headerShown: false,
-              tabBarIcon: ({ focused }) =>
-                focused ? (
-                  <Entypo name="ticket" size={34} color="#FFB703" />
-                ) : (
-                  <Entypo name="ticket" size={28} color="white" style={{ margin: 0 }} />
-                ),
-              tabBarLabelStyle: {
-                fontSize: 13,
-                fontWeight: "600",
-                color: "#FFB703",
-              },
-            }}
-          />
-          <Tab.Screen
-            name="Profile"
-            component={LoginScreen}
-            options={{
-              tabBarLabel: "Profile",
-              headerShown: false,
-              tabBarIcon: ({ focused }) =>
-                focused ? (
-                  <Ionicons name="person" size={30} color="#FFB703" />
-                ) : (
-                  <Ionicons name="person-outline" size={28} color="white" />
-                ),
-              tabBarLabelStyle: {
-                fontSize: 13,
-                fontWeight: "600",
-                color: "#FFB703",
-              },
-            }}
-          />
-        </Tab.Navigator>
-      );
-    }
-  
+  const Tab = createBottomTabNavigator();
+  const Stack = createNativeStackNavigator();
+
+  function BotttomTabs() {
     return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="WelcomeH" component={WelcomeH} options={{ headerShown: false }} />
-          <Stack.Screen name="main" component={BotttomTabs} options={{ headerShown: false }} />
-          <Stack.Screen name="see all" component={Seeallticket} options={{ headerShown: false }} />
-          <Stack.Screen name="tikcet" component={TicketScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: styles.bottomTabBar,
+        }}
+      >
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarLabel: "Home",
+            headerShown: false,
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <Entypo name="home" size={34} color="#FFB703" style={{ margin: 0 }} />
+              ) : (
+                <AntDesign name="home" size={28} color="white" style={{ margin: 0 }} />
+              ),
+            tabBarLabelStyle: {
+              fontSize: 13,
+              fontWeight: "600",
+              color: "#FFB703",
+            },
+          }}
+        />
+        <Tab.Screen
+          name="account"
+          component={Singnup}
+          options={{
+            tabBarButton: () => null, // Hide the tab button
+            tabBarLabelStyle: { display: "none" }, // Hide the tab label
+          }}
+        />
+        <Tab.Screen
+          name="ticket"
+          component={TicketScreen}
+          options={{
+            tabBarLabel: "ticket",
+            headerShown: false,
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <Entypo name="ticket" size={34} color="#FFB703" />
+              ) : (
+                <Entypo name="ticket" size={28} color="white" style={{ margin: 0 }} />
+              ),
+            tabBarLabelStyle: {
+              fontSize: 13,
+              fontWeight: "600",
+              color: "#FFB703",
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={LoginScreen}
+          options={{
+            tabBarLabel: "Profile",
+            headerShown: false,
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <Ionicons name="person" size={30} color="#FFB703" />
+              ) : (
+                <Ionicons name="person-outline" size={28} color="white" />
+              ),
+            tabBarLabelStyle: {
+              fontSize: 13,
+              fontWeight: "600",
+              color: "#FFB703",
+            },
+          }}
+        />
+      </Tab.Navigator>
     );
-  };
-  
-  export default StackNavigator;
-   const styles = StyleSheet.create({
-         bottomTabBar: {
-             backgroundColor: 'transparent',
-             borderTopWidth: 0,
-             position: 'absolute',
-             height: 90,
-             justifyContent: 'center',
-             alignItems: 'center',
-             shadowColor: 'black',
-            shadowOpacity: 0.2,
-         shadowRadius: 10,
-            elevation: 10,
-     },
-     });
-    
+  }
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="WelcomeH" component={WelcomeH} options={{ headerShown: false }} />
+        <Stack.Screen name="main" component={BotttomTabs} options={{ headerShown: false }} />
+        <Stack.Screen name="see all" component={Seeallticket} options={{ headerShown: false }} />
+        <Stack.Screen name="tikcet" component={TicketScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default StackNavigator;
+const styles = StyleSheet.create({
+  bottomTabBar: {
+    backgroundColor: 'black',
+    borderTopWidth: 0,
+    position: 'absolute',
+    height: 90,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: 'black',
+
+    shadowRadius: 10,
+    elevation: 10,
+  },
+});

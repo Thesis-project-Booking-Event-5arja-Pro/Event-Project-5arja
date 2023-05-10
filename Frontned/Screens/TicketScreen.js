@@ -1,44 +1,35 @@
-import { View, Text, Image } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { withExpoSnack } from 'nativewind';
 import { useNavigation } from "@react-navigation/native";
-import { tailwind } from 'react-native-tailwindcss';
-
+import { Text, View, StyleSheet, ImageBackground, Image } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Ionicons } from '@expo/vector-icons';
 
 const TicketScreen = ({ route }) => {
-    const { item } = route.params;
-    const navigation = useNavigation();
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerShown: true,
-            title: 'Ticket.com',
-            headerTitleStyle: {
-                fontSize: 20,
-                fontWeight: "bold",
-                color: "white"
+  const { item } = route.params;
 
-
-            },
-            headerStyle: {
-                backgroundColor: "black",
-                opacity: 0.7,
-                height: 110
-
-
-            },
-
-        })
-
-    }, [])
-
-
-    return (
-        <View className="flex-1 items-center justify-center  bg-white">
-
-            <Image source={{ uri: item.title }} style={{ width: 200, height: 200 }} />
-            <Text className="text-3xl">dsd</Text>
+  return (
+    <View style={{ flex: 1, backgroundColor: 'black' }}>
+      <ScrollView>
+        <ImageBackground
+          resizeMode="cover"
+          source={{ uri: item.title }}
+          style={{ width: "100%", height: 360, opacity: 0.9 }}
+        >
+          <View style={{ position: 'absolute', top: 30, left: 10 }}>
+          <Ionicons name='share-outline' size={30} color='white' />
+            
+          </View>
+          <View style={{ position: 'absolute', top: 35, right: 10 }}>
+          <Ionicons name='heart-outline' size={30} color='white' />
+          
+          </View>
+        </ImageBackground>
+        <View>
         </View>
-    )
+      </ScrollView>
+    </View>
+  )
 }
 
-export default TicketScreen
+export default TicketScreen;

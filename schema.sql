@@ -107,6 +107,8 @@ CREATE TABLE IF NOT EXISTS `ed`.`event` (
   `category` VARCHAR(45) NOT NULL,
   `admin_id` INT NOT NULL,
   `lineUp` LONGTEXT NULL,
+  `latitude` LONGTEXT NULL,
+  `longitude` LONGTEXT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_event_admin1_idx` (`admin_id` ASC) VISIBLE,
   CONSTRAINT `fk_event_admin1`
