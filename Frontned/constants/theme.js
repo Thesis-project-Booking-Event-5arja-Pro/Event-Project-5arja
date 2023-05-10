@@ -1,10 +1,7 @@
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
-const CUSTOMFONT_REGULAR = 'ProductSans-Regular';
-const CUSTOMFONT_BOLD = 'ProductSans-Bold';
-const CUSTOMFONT_BLACK = 'ProductSans-Black';
-const fontss = 'ProductSans-AdventPro'
+
 
 export const COLORS = {
   default: '#FFFFFF',
@@ -51,21 +48,21 @@ export const SIZES = {
   height,
 };
 export const FONTS = {
-  large: { fontFamily: CUSTOMFONT_REGULAR, fontSize: SIZES.large, lineHeight: '40px' },
-  small: { fontFamily: CUSTOMFONT_REGULAR, fontSize: SIZES.small, lineHeight: '22px' },
-  h1: { fontFamily: CUSTOMFONT_BOLD, fontSize: SIZES.h1, lineHeight: '36px' },
-  h2: { fontFamily: CUSTOMFONT_BOLD, fontSize: SIZES.h2, lineHeight: '30px' },
-  h3: { fontFamily: CUSTOMFONT_BOLD, fontSize: SIZES.h3, lineHeight: '22px' },
-  h4: { fontFamily: CUSTOMFONT_BOLD, fontSize: SIZES.h4, lineHeight: '22px' },
-  h5: { fontFamily: CUSTOMFONT_BOLD, fontSize: SIZES.h5, lineHeight: '22px' },
-  h6: { fontFamily: CUSTOMFONT_BOLD, fontSize: SIZES.h6, lineHeight: '22px' },
-  body1: { fontFamily: CUSTOMFONT_REGULAR, fontSize: SIZES.body1, lineHeight: '36px', },
-  body2: { fontFamily: CUSTOMFONT_REGULAR, fontSize: SIZES.body2, lineHeight: '30px', },
-  body3: { fontFamily: CUSTOMFONT_REGULAR, fontSize: SIZES.body3, lineHeight: '25px', },
-  body4: { fontFamily: CUSTOMFONT_REGULAR, fontSize: SIZES.body4, lineHeight: '22px', },
-  body5: { fontFamily: CUSTOMFONT_REGULAR, fontSize: SIZES.body5, lineHeight: '22px', },
-  body6: { fontFamily: CUSTOMFONT_REGULAR, fontSize: SIZES.body6, lineHeight: '22px', },
-  dd: { fontFamily: fontss, fontSize: SIZES.body5, lineHeight: '22px' }
+  large: { fontSize: SIZES.large, lineHeight: '40px' },
+  small: { fontSize: SIZES.small, lineHeight: '22px' },
+  h1: {  fontSize: SIZES.h1, lineHeight: '36px' },
+  h2: {  fontSize: SIZES.h2, lineHeight: '30px' },
+  h3: {  fontSize: SIZES.h3, lineHeight: '22px' },
+  h4: {  fontSize: SIZES.h4, lineHeight: '22px' },
+  h5: {  fontSize: SIZES.h5, lineHeight: '22px' },
+  h6: {  fontSize: SIZES.h6, lineHeight: '22px' },
+  body1: { fontSize: SIZES.body1, lineHeight: '36px', },
+  body2: { fontSize: SIZES.body2, lineHeight: '30px', },
+  body3: { fontSize: SIZES.body3, lineHeight: '25px', },
+  body4: { fontSize: SIZES.body4, lineHeight: '22px', },
+  body5: { fontSize: SIZES.body5, lineHeight: '22px', },
+  body6: { fontSize: SIZES.body6, lineHeight: '22px', },
+
 };
 
 const appTheme = { COLORS, SIZES, FONTS };

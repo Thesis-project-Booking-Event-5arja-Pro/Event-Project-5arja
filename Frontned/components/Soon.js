@@ -5,12 +5,12 @@ import { AntDesign } from '@expo/vector-icons';
 
 const Feautred = () => {
     return (
-        <View style={{marginTop:30}}>
+        <View style={{}}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <Text style={{ color: "white", fontSize: 22, fontWeight: 'bold', marginRight: 250 }}>Featured</Text>
-                <AntDesign name="rightcircleo" size={24} color="white" />
+                <Text style={{ color: "white", fontSize: 22, fontWeight: 'bold', marginRight: 290 }}>Soon</Text>
+                <AntDesign name="rightcircleo" size={24} color="white" style={{ marginTop: 20 }} />
             </View>
-            <Text style={{ color: "white", fontSize: 12 }}>desc slmsdsb</Text>
+            <Text style={{ color: "white", fontSize: 12, }}>desc slmsdsb</Text>
         </View>
 
     )

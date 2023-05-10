@@ -29,25 +29,29 @@ const Render = () => {
     const renderItem = ({ item, index }) => (
         <TouchableOpacity onPress={() => handleImagePress(item)}>
             <View style={{ marginLeft: 20 }}>
-                <ImageBackground source={{ uri: item.title }} borderRadius={SIZES.radius} resizeMode='cover' style={{ width: 330, height: 350, marginTop: 20 }} />
+<<<<<<< HEAD
+                <ImageBackground source={{ uri: item.title }}  resizeMode='cover' style={{ width: 330, height: 350, marginTop: 20 }} />
+=======
+                <ImageBackground source={{ uri: item.title }} resizeMode='cover' style={{ width: 330, height: 350, marginTop: 10 }} />
+>>>>>>> 7f05c75d92c992ac0a3ac6ca0c9f6845d2dbbf49
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: 20, marginTop: -80 }}>
                     <View>
                         <McText h2>Tale of us</McText>
                         <McText h5 style={{}}>1 dec - jakarta indonesia</McText>
                     </View>
-                    <MaterialIcons name="favorite-border" size={30} color="white" style={{ position: 'absolute', top: -260, left: 270 }} />
+                    <MaterialIcons name="favorite-border" size={30} color="white" style={{}} />
                 </View>
             </View>
-           
+
         </TouchableOpacity>
     );
 
     return (
         <View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: -720 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
                 <McText dd black style={{ marginLeft: 10, fontSize: 17, fontWeight: 700, marginTop: 10 }}>POPULAR EVENTS</McText>
                 <TouchableOpacity onPress={handleSeeAllPress}>
-                    <McText style={{ marginLeft: 200, textDecorationLine: 'underline' }}>See all</McText>
+                    <McText style={{ marginLeft: 165, textDecorationLine: 'underline' }}>See all</McText>
                 </TouchableOpacity>
             </View>
             <FlatList

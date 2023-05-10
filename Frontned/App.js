@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Seeallticket from './Screens/Seeallticket';
 import { createStackNavigator } from '@react-navigation/stack';
 import Drawers from './Drawers';
+import LoginScreen from './Screens/LoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -14,7 +15,11 @@ export default function App() {
   return (
    
     <> 
-      <StackNavigator /> 
+  
+      <StackNavigator />
+      
+     
+
       {/* <Drawers /> */}
     </>
   

@@ -24,7 +24,7 @@ const WelcomeH = ({ navigation }) => {
 
                 <Text
                     style={{
-                        fontFamily: 'Inter-Bold',
+              
                         fontWeight: 'bold',
                         fontSize: 30,
                         color: '#20315f',
@@ -69,7 +69,7 @@ const WelcomeH = ({ navigation }) => {
                         fontSize: 18,
                         textAlign: 'center',
                         fontWeight: 'bold',
-                        fontFamily: 'Roboto-MediumItalic',
+                      
                     }}>
                     Book your ticket
                 </Text>
@@ -95,8 +95,7 @@ const WelcomeH = ({ navigation }) => {
                         fontSize: 18,
                         textAlign: 'center',
                         fontWeight: 'bold',
-                        fontFamily: 'Roboto-MediumItalic',
-
+            
                     }}>
                     Take a look
                 </Text>
