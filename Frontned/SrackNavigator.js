@@ -146,9 +146,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import Seeallticket from './Screens/Seeallticket';
-import LoginScreen from './Screens/LoginScreen';
-import WelcomeH from './Screens/WelcomeH';
+import LoginScreen from './Screens/LoginScreen'
+import WelcomeH from './Screens/WelcomeH'
+import SeeAll from './Screens/SeeAll'
 import Singnup from './Screens/Singnup'
+
 
 
 
@@ -233,31 +235,31 @@ const StackNavigator = () => {
     }
   
     return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="WelcomeH" component={WelcomeH} options={{ headerShown: false }} />
-          <Stack.Screen name="main" component={BotttomTabs} options={{ headerShown: false }} />
-          <Stack.Screen name="see all" component={Seeallticket} options={{ headerShown: false }} />
-          <Stack.Screen name="tikcet" component={TicketScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  };
-  
-  export default StackNavigator;
-   const styles = StyleSheet.create({
-         bottomTabBar: {
-             backgroundColor: 'transparent',
-             borderTopWidth: 0,
-             position: 'absolute',
-             height: 90,
-             justifyContent: 'center',
-             alignItems: 'center',
-             shadowColor: 'black',
-            shadowOpacity: 0.2,
-         shadowRadius: 10,
-            elevation: 10,
-     },
-     });
-    
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen name="WelcomeH" component={WelcomeH} options={{ headerShown: false }} />
+
+                <Stack.Screen name="main" component={BotttomTabs} options={{ headerShown: false }} />
+                <Stack.Screen name="SeeAll" component={SeeAll} options={{ headerShown: false }} />
+                <Stack.Screen name="tikcet" component={TicketScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
+}
+
+export default SrackNavigator
+const styles = StyleSheet.create({
+    bottomTabBar: {
+        backgroundColor: 'transparent',
+        borderTopWidth: 0,
+        position: 'absolute',
+        height: 90,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: 'black',
+        shadowOpacity: 0.2,
+        shadowRadius: 10,
+        elevation: 10,
+    },
+});

@@ -19,7 +19,8 @@ const Render = () => {
     const navigation = useNavigation();
 
     const handleSeeAllPress = () => {
-        navigation.navigate('see all');
+       
+        navigation.navigate('SeeAll');
     };
 
     const handleImagePress = (item) => {
@@ -29,11 +30,8 @@ const Render = () => {
     const renderItem = ({ item, index }) => (
         <TouchableOpacity onPress={() => handleImagePress(item)}>
             <View style={{ marginLeft: 20 }}>
-<<<<<<< HEAD
-                <ImageBackground source={{ uri: item.title }}  resizeMode='cover' style={{ width: 330, height: 350, marginTop: 20 }} />
-=======
+
                 <ImageBackground source={{ uri: item.title }} resizeMode='cover' style={{ width: 330, height: 350, marginTop: 10 }} />
->>>>>>> 7f05c75d92c992ac0a3ac6ca0c9f6845d2dbbf49
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: 20, marginTop: -80 }}>
                     <View>
                         <McText h2>Tale of us</McText>
