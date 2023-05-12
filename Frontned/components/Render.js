@@ -18,7 +18,8 @@ const Render = () => {
     const navigation = useNavigation();
 
     const handleSeeAllPress = () => {
-        navigation.navigate('see all');
+       
+        navigation.navigate('SeeAll');
     };
 
     const handleImagePress = (item) => {
