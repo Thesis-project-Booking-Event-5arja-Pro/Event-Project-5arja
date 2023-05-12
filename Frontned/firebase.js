@@ -1,26 +1,23 @@
-// import {getAuth} from' firebase/auth'
-import firebase from "firebase/compat/app"
-import "firebase/compat/auth"
-import "firebase/compat/firestore"
+
+import { initializeApp } from "firebase/app";
+import {getAuth} from "firebase/auth";
+import {getFirestore} from "firebase/firestore";
+
 const firebaseConfig = {
-    apiKey: "AIzaSyD1CjtA4hyz4Tnwuy9wwSWZ9EDMmBY8EHM",
-    authDomain: "kharajni-4223a.firebaseapp.com",
-    projectId: "kharajni-4223a",
-    storageBucket: "kharajni-4223a.appspot.com",
-    messagingSenderId: "405960096643",
-    appId: "1:405960096643:web:7e638ccc48951fde2fd4b6",
-    measurementId: "G-SV1X47NMTN"
-  };
+  apiKey: "AIzaSyB8wmlQdUMJ15RznbiLq9bl317VwpJTrRM",
+  authDomain: "arajni.firebaseapp.com",
+  projectId: "arajni",
+  storageBucket: "arajni.appspot.com",
+  messagingSenderId: "977181989846",
+  appId: "1:977181989846:web:14274b2cd0285e56422277",
+  measurementId: "G-B9EG9TW901"
+};
 
 
+const app = initializeApp(firebaseConfig);
 
-if(!firebase.apps.length){
-    firebase.initializeApp(firebaseConfig);
-}
- 
-//  firebase.Firestore(app);
-// const colref=collection(db,'kharja')
-const db = firebase.firestore()
+const auth = getAuth(app);
 
- const auth = firebase.auth()
-export  { firebase,db,auth};
+const db = getFirestore();
+
+export {auth,db};

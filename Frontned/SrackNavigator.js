@@ -140,7 +140,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './Screens/HomeScreen';
-import ProfileScreen from './Screens/ProfileScreen';
 import TicketScreen from './Screens/TicketScreen';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -148,8 +147,7 @@ import { Entypo } from '@expo/vector-icons';
 import Seeallticket from './Screens/Seeallticket';
 import LoginScreen from './Screens/LoginScreen';
 import WelcomeH from './Screens/WelcomeH';
-import Singnup from './Screens/Singnup'
-
+import RegisterScreen from "./Screens/RegisterScreen"
 
 
 const StackNavigator = () => {
@@ -184,7 +182,7 @@ const StackNavigator = () => {
         />
         <Tab.Screen
           name="account"
-          component={Singnup}
+          component={RegisterScreen }
           options={{
             tabBarButton: () => null, // Hide the tab button
             tabBarLabelStyle: { display: "none" }, // Hide the tab label
@@ -240,6 +238,8 @@ const StackNavigator = () => {
         <Stack.Screen name="see all" component={Seeallticket} options={{ headerShown: false }} />
         <Stack.Screen name="tikcet" component={TicketScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Reg" component={RegisterScreen} options={{ headerShown: false }} />
+     
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -5,13 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 import Render from '../components/Render';
 import { ScrollView } from 'react-native-gesture-handler';
-
 import Soon from '../components/Soon'
 import { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 import Nearyou from '../components/Nearyou';
-
-
 
 
 const HomeScreen = () => {

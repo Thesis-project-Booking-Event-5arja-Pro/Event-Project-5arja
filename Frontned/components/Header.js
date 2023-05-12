@@ -85,7 +85,7 @@ const SectionHeader = styled.View`
 padding : 15px ${SIZES.padding};
 
 fontSize:30px;
-flex-direction:row
+flex-direction:row 
 
 
 
