@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@react-navigation/native": "^6.1.6"
+    "@react-navigation/native": "^6.1.6",
+    "expo-notifications": "^0.18.1"
   }
 }
