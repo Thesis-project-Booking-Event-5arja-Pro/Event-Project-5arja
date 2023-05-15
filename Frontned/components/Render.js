@@ -8,13 +8,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { McText, McIcon, McAvatar } from '../comp'
 
 const DATA = [
-    { id: '1', title: 'https://themusicessentials.com/wp-content/uploads/2016/11/unnamed-2-15-696x464.jpg' },
-    { id: '2', title: 'https://pbs.twimg.com/ext_tw_video_thumb/1579837438280830977/pu/img/uoZK4DCQIP9sO-K8?format=jpg&name=large' },
-    { id: '3', title: 'https://pbs.twimg.com/ext_tw_video_thumb/1579837438280830977/pu/img/uoZK4DCQIP9sO-K8?format=jpg&name=large' },
-    { id: '4', title: 'https://pbs.twimg.com/ext_tw_video_thumb/1611795399513186308/pu/img/GEhwJfW0cqvrrulP?format=jpg&name=large' },
+    { id: '1', title: 'https://themusicessentials.com/wp-content/uploads/2016/11/unnamed-2-15-696x464.jpg' ,   latitude: 45.8942635655478289, longitude: 10.18710378287, name:"Tatak dom tak", date: "2023-05-15", lineup: "Sven Väth, Nina Kraviz, Ilario Alicante, Adam Beyer, Richie Hawtin, Craig Richards, DJ Koze, Gerd Janson, Seth Troxler and Ricardo Villalobos.", localstion: "mexuioscjc", desc: "Born in Toronto, Karm moved to Italy when he was just a child. It was at the tender age of ten when his parents took him to a classical concert that he felt “true love at first sight.” He dreamed of becoming a pianist but eventually settled for law school. Matteo left New York when he was just a year old and spent his late teens booking techno artists for his loft parties. After Karm quit law school, the pair met while studying music production at the SAE Institute." },
+    { id: '2', title: 'https://imageio.forbes.com/blogs-images/lisakocay/files/2018/09/r85N0KgQ.jpeg?format=jpg&width=1200',latitude: 45.8942635655478289, longitude: 10.18710378287 ,  name:"event chikimama"  , date: "5/02/20225", lineup: "argey,daniel", localstion: "mexuioscjc", desc: "ras tnbirs"},
+    { id: '3', title: 'https://themusicessentials.com/wp-content/uploads/2016/11/unnamed-2-15-696x464.jpg', latitude: 45.8942635655478289, longitude: 10.18710378287 ,  name:"event chikombo"   , date: "5/02/20225", lineup: "argey,daniel", localstion: "mexuioscjc", desc: "ras tnbirs" },
+    { id: '4', title: 'https://imageio.forbes.com/blogs-images/lisakocay/files/2018/09/r85N0KgQ.jpeg?format=jpg&width=1200' ,  latitude: 45.8942635655478289, longitude: 10.18710378287 , name:"event chbikyaMama"  , date: "5/02/20225", lineup: "argey,daniel", localstion: "mexuioscjc", desc: "ras tnbirs"  },
     { id: '5', title: 'Item 5' },
 ];
-
 const Render = () => {
     const navigation = useNavigation();
 
@@ -30,8 +29,7 @@ const Render = () => {
     const renderItem = ({ item, index }) => (
         <TouchableOpacity onPress={() => handleImagePress(item)}>
             <View style={{ marginLeft: 20 }}>
-
-                <ImageBackground source={{ uri: item.title }} resizeMode='cover' style={{ width: 330, height: 350, marginTop: 10 }} />
+                <ImageBackground source={{ uri: item.title }}  resizeMode='cover' style={{ width: 330, height: 350, marginTop: 20 }} />
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: 20, marginTop: -80 }}>
                     <View>
                         <McText h2>Tale of us</McText>
@@ -47,9 +45,9 @@ const Render = () => {
     return (
         <View>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
-                <McText dd black style={{ marginLeft: 10, fontSize: 17, fontWeight: 700, marginTop: 10 }}>POPULAR EVENTS</McText>
+                <McText dd black style={{ marginLeft: 10, fontSize: 17, fontWeight: 700, marginTop: 60 }}>POPULAR EVENTS</McText>
                 <TouchableOpacity onPress={handleSeeAllPress}>
-                    <McText style={{ marginLeft: 165, textDecorationLine: 'underline' }}>See all</McText>
+                    <McText style={{ marginLeft: 188, textDecorationLine: 'underline', marginTop: 55 }}>See all</McText>
                 </TouchableOpacity>
             </View>
             <FlatList
@@ -57,7 +55,7 @@ const Render = () => {
                 contentContainerStyle={{}}
                 data={DATA}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id} 
             />
 
 

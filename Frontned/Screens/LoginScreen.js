@@ -1,200 +1,174 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet,SafeAreaView,KeyboardAvoidingView, Pressable, Dimensions } from 'react-native';
-import { firebase } from 'firebase/auth';
-import firestore from 'firebase/firestore';
-import { auth } from "../firebase"
-import{signInWithEmailAndPassword}from"firebase/auth"
-import { useNavigation } from '@react-navigation/native';
-import Icon1 from 'react-native-vector-icons/FontAwesome'
-import Icon2 from 'react-native-vector-icons/MaterialIcons';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  TextInput,
+  Pressable,
+  ActivityIndicator
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { Video, ResizeMode } from 'expo-av';
 
-import HomeScreen from './HomeScreen';
-  const LoginScreen = () => {
 
+const LoginScreen = () => {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState("");
+  const navigation = useNavigation();
 
-    const [values, setValues] = useState({
-        name: "",
-        email: "",
-      });
- ;
-  const [error, setError] = useState(null);
-  const [SubmitButtonDisabled,setSubmitButtonDisabled ] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [isHidden, setIsHidden] = useState(true);
-  const togglePasswordVisibility = () => {
-    setIsHidden(!isHidden);
-  };
-  const handleRememberMeChange = (value) => {
-    setRememberMe(value);
-  };
-
- const navigation=useNavigation()
-  const handleLogin = () => {
-    
-    if (!values.email || !values.pass) {
-        setErrorMsg("Fill all fields");
-        return;
+  useEffect(() => {
+    setLoading(true);
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (!authUser) {
+        setLoading(false);
       }
-      setErrorMsg("");
-  
-      setSubmitButtonDisabled(true);
-      signInWithEmailAndPassword(auth, values.email, values.pass)
-      
-        .then(async (res) => {
-          setSubmitButtonDisabled(false);
-          
-          navigation.navigate('HomeScreen')
-        })
-        .catch((err) => {
-          setSubmitButtonDisabled(false);
-          setErrorMsg(err.message);
-        });
+      if (authUser) {
+        navigation.replace("Home");
+      }
+    });
+
+    return unsubscribe;
+  }, [])
+
+  const login = () => {
+    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+      console.log("user credential", userCredential);
+      const user = userCredential.user;
+      console.log("user details", user)
+    })
   }
 
   return (
-    <SafeAreaView style={{
-        flex: 2,
+    <SafeAreaView
+      style={{
+        flex: 1,
         backgroundColor: "black",
-        padding: 10,
         alignItems: "center",
-      }} >
+        padding: 10,
+
+      }}
+    >
+
+      <View style={{}}>
+        <Video
+
+
+          source={require('../unit/txt.mp4')}
+          style={{ height: 300, width: 300 }}
+
+          resizeMode="cover"
+          shouldPlay
+
+
+
+        />
+      </View>
+      {loading ? (
+        <View style={{ alignItems: "center", justifyContent: "center", flexDirection: "row", flex: 1 }}>
+          <Text style={{ marginRight: 10 }}>Loading</Text>
+          <ActivityIndicator size="large" color={"red"} />
+        </View>
+      ) : (
         <KeyboardAvoidingView>
           <View
             style={{
               justifyContent: "center",
               alignItems: "center",
-              marginTop: 100,
-            }}>
-            <Text
-              style={{fontFamily:"Boba Milky", color: "white", fontSize: 17, fontWeight: "700" }}
-            >
-             Hi, Wecome Back! 👋 
+              marginTop: 20,
+            }}
+          >
+
+
+            <Text style={{ fontSize: 20, marginTop: 8, fontWeight: "600", color: "white" }}>
+              Sign In to your account
             </Text>
-           
           </View>
-          {/*  email view */}
-          <View style={{ marginTop: 50 }}>
-            <View>
-              <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
-                Email
-              </Text>
+
+          <View style={{ marginTop: 40 }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <MaterialCommunityIcons
+                name="email-outline"
+                size={24}
+                color="white"
+              />
               <TextInput
-                value={values.email}
-                onChangeText={(text) => setValues({...values,email:text})}
-                placeholder="enter email"
-                placeholderTextColor={"grey"}
+                placeholder="Email"
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+                placeholderTextColor="white"
                 style={{
-                  fontSize: values.email ? 18 : 18,
-                  borderRadius: 10,
-                  borderColor: "white",
-                  backgroundColor:"white",
-                  borderWidth: 1,
+                  fontSize: email ? 18 : 18,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "gray",
+                  marginLeft: 13,
+                  width: 300,
                   marginVertical: 10,
-                  width: '100%',
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
-                  paddingRight: 30,
-                  borderRadius:30,
                 }}
               />
             </View>
-          </View>
-          {/*  password view */}
-          <View>
-            <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
-              password
-            </Text>
+
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <TextInput
-                  value={values.pass}
-                  onChangeText={(text) => setValues({...values,pass:text})}
-                  placeholder="enter password"
-                  placeholderTextColor={"grey"}
-                  style={{
-                    fontSize: values.pass ? 18 : 18,
-                    borderRadius: 10,
-                    borderColor: "white",
-                    borderWidth: 1,
-                    marginVertical: 10,
-                    backgroundColor:"white",
-                    width: '100%',
-                    paddingHorizontal: 10,
-                    paddingVertical: 5,
-                    flex: 1,
-                    paddingRight: 30,
-                    borderRadius:50
-                  }}
-                  secureTextEntry={isHidden}
-                />
-                <TouchableOpacity onPress={togglePasswordVisibility}
-                  style={{
-                    position: "absolute",
-                    right: 10,
-                    height: "100%",
-                    justifyContent: "center",
-                  }}>
-                  <Icon
-                    name={isHidden ? "eye-slash" : "eye"}
-                    size={20}
-                  />
-                </TouchableOpacity>
-              </View>
+              <Ionicons name="key-outline" size={24} color="white" />
+              <TextInput
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                secureTextEntry={true}
+                placeholder="Password"
+                placeholderTextColor="white"
+                style={{
+                  fontSize: password ? 18 : 18,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "gray",
+                  marginLeft: 13,
+                  width: 300,
+                  marginVertical: 20,
+                }}
+              />
             </View>
-          </View>
-          {/* forget password text button */}
-          <Text
-            onPress={() => console.log('forget')}
-            style={{
-              textAlign: 'right', color: 'red'
-            }}>
-            forget password ?
-          </Text>
-          <Text
-            onPress={()=>navigation.navigate("account")}
-            style={{
-              textAlign: 'left', color: 'white'
-            }}>
-            create acounte
-          </Text>
-          <View>
-            {/* <Checkbox label="Remember me"  /> */}
-  
-          </View>
-          {/* login button */}
-          <Pressable
-            onPress={() => console.log('login')}
-            style={{
-              width: 350,
-              backgroundColor: "#003580",
-              padding: 20,
-              borderRadius: 15,
-              marginTop: 50,
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            <Text
+
+            <Pressable
+              onPress={login}
               style={{
-  
-                textAlign: "center",
-                color: "white",
-                fontSize: 17,
-                fontWeight: "bold",
+                width: 200,
+                backgroundColor: "orange",
+                padding: 15,
+                borderRadius: 7,
+                marginTop: 50,
+                marginLeft: "auto",
+                marginRight: "auto",
               }}
             >
-              Login
-            </Text>
-          </Pressable>
+              <Text style={{ fontSize: 18, textAlign: "center", color: "white" }}>
+                Login
+              </Text>
+            </Pressable>
+
+            <Pressable onPress={() => navigation.navigate("Reg")} style={{ marginTop: 20 }}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 17,
+                  color: "gray",
+                  fontWeight: "500",
+                }}
+              >
+                Don't have a account? Sign Up
+              </Text>
+            </Pressable>
+          </View>
         </KeyboardAvoidingView>
-      </SafeAreaView>
-    
+      )}
+    </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-   
-  });
+export default LoginScreen;
 
-export default LoginScreen
+const styles = StyleSheet.create({});

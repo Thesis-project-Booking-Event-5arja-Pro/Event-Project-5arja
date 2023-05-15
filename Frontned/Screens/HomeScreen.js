@@ -5,18 +5,20 @@ import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 import Render from '../components/Render';
 import { ScrollView } from 'react-native-gesture-handler';
-import Feautred from '../components/Feautred'
 import Soon from '../components/Soon'
 import { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 import Nearyou from '../components/Nearyou';
 
 
-
-
 const HomeScreen = () => {
   const [location, setLocation] = useState();
   const [address, setAddress] = useState();
+  const [showLoc, handleShow ]= useState(true)
+
+
+  
+
 
   Location.setGoogleApiKey("AIzaSyD5GUOMMrDY5Ml8JOQ5j7z7p9f8GaGCDBg");
 
@@ -30,11 +32,10 @@ const HomeScreen = () => {
 
       let currentLocation = await Location.getCurrentPositionAsync({});
       setLocation(currentLocation);
-      console.log("Location:");
       console.log(currentLocation);
     };
     getPermissions();
-  }, []);
+  }, [showLoc]);
 
   const navigation = useNavigation();
   useLayoutEffect(() => {
@@ -56,9 +57,9 @@ const HomeScreen = () => {
 
      
 
-        <Feautred   />
+  
         <Soon />
-        <Nearyou/>
+        <Nearyou latitude={location?.coords?.latitude} longitude={location?.coords?.longitude} />
       
 
     </ScrollView>

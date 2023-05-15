@@ -15,7 +15,7 @@ const DATA = [
 
 const Seeallticket = () => {
     return (
-        <View style={{ backgroundColor: "black" }}>rr
+        <View style={{ backgroundColor: "black" }}>
             <Pressable
                 style={{
                     flexDirection: "row",
