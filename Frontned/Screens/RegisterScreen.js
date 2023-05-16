@@ -1,3 +1,5 @@
+import React, { useState, useContext, useEffect } from "react";
+
 import {
   StyleSheet,
   Text,
@@ -6,49 +8,55 @@ import {
   TextInput,
   SafeAreaView,
   KeyboardAvoidingView,
-  Alert
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView,
 } from "react-native";
-import { Feather } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { Video, ResizeMode } from 'expo-av';
+import { Video, ResizeMode } from "expo-av";
+import { AntDesign } from "@expo/vector-icons";
+import { AuthContext } from "./AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import URL from "../api/client";
+import axios from "axios";
+
 const RegisterScreen = () => {
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("");
-    const [phone,setPhone] = useState("");
-    const navigation = useNavigation();
-    const register = () => {
-      if(email === "" || password === "" || phone === ""){
-        Alert.alert(
-          "Invalid Details",
-          "Please fill all the details",
-          [
-            {
-              text: "Cancel",
-              onPress: () => console.log("Cancel Pressed"),
-              style: "cancel"
-            },
-            { text: "OK", onPress: () => console.log("OK Pressed") }
-          ],
-          { cancelable: false }
-        );
-      }
-      createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-        console.log("user credential",userCredential);
-        const user = userCredential._tokenResponse.email;
-        const myUserUid = auth.currentUser.uid;
-      
-        setDoc(doc(db, "users", `${myUserUid}`), {
-          email: user,
-          phone: phone
-        })
+  const [userName, setuserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const navigation = useNavigation();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const { updateUser } = useContext(AuthContext);
+
+  const register = () => {
+    const info = {
+      firstName: userName,
+      email: email,
+      password: password,
+      phoneNumber: phone,
+    };
+    axios
+      .post(`http://${URL}:5000/api/client/addclient`, info)
+      .then((res) => {
+        console.log("hi im clinet posed" + res);
+        AsyncStorage.setItem("token", res.data);
+        updateUser(info, res.data);
+        navigation.replace("main");
       })
-    }
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -58,126 +66,165 @@ const RegisterScreen = () => {
         padding: 10,
       }}
     >
-      
-      <View style={{}}>
-        <Video
-
-
-          source={require('../unit/txt.mp4')}
-          style={{ height: 300, width: 300 }}
-
-          resizeMode="cover"
-          shouldPlay
-
-
-
-        />
-      </View>
       <KeyboardAvoidingView>
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-     
-          }}
-        >
-      
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView>
+          <View>
+            <View style={{}}>
+              <Video
+                source={require("../unit/txt.mp4")}
+                style={{ height: 300, width: 300 }}
+                resizeMode="cover"
+                shouldPlay
+              />
+            </View>
 
-          <Text style={{ fontSize: 18, marginTop: -10, fontWeight: "600"  , color:"white"}}>
-            Create a new Account
-          </Text>
-        </View>
-
-        <View style={{ marginTop: 50 }}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <MaterialCommunityIcons
-              name="email-outline"
-              size={24}
-              color="white"
-            />
-            <TextInput
-              placeholder="Email"
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              placeholderTextColor="white"
+            <View
               style={{
-                fontSize: email ? 18 : 18,
-                borderBottomWidth: 1,
-                borderBottomColor: "gray",
-                marginLeft: 13,
-                width: 300,
-                marginVertical: 10,
-              }}
-            />
-          </View>
-
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Ionicons name="key-outline" size={24} color="white" />
-            <TextInput
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-              secureTextEntry={true}
-              placeholder="Password"
-              placeholderTextColor="white"
-              style={{
-                fontSize: password ? 18 : 18,
-                borderBottomWidth: 1,
-                borderBottomColor: "gray",
-                marginLeft: 13,
-                width: 300,
-                marginVertical: 20,
-              }}
-            />
-          </View>
-
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Feather name="phone" size={24} color="white" />
-            <TextInput
-              value={phone}
-              onChangeText={(text) => setPhone(text)}
-              placeholder="Phone No"
-              placeholderTextColor="white"
-              style={{
-                fontSize: password ? 18 : 18,
-                borderBottomWidth: 1,
-                borderBottomColor: "gray",
-                marginLeft: 13,
-                width: 300,
-                marginVertical: 10,
-              }}
-            />
-          </View>
-
-          <Pressable
-          onPress={register}
-            style={{
-              width: 200,
-              backgroundColor: "orange",
-              padding: 15,
-              borderRadius: 7,
-              marginTop: 50,
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            <Text style={{ fontSize: 18, textAlign: "center", color: "white" }}>
-              Register
-            </Text>
-          </Pressable>
-
-          <Pressable onPress={() => navigation.goBack()} style={{ marginTop: 20 }}>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 17,
-                color: "gray",
-                fontWeight: "500",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              Already have a account? Sign in
-            </Text>
-          </Pressable>
-        </View>
+              <Text
+                style={{
+                  fontSize: 18,
+                  marginTop: -10,
+                  fontWeight: "600",
+                  color: "white",
+                }}
+              >
+                Create a new Account
+              </Text>
+            </View>
+
+            <View style={{ marginTop: 50 }}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <AntDesign name="user" size={24} color="white" />
+                <TextInput
+                  value={userName}
+                  onChangeText={(text) => setuserName(text)}
+                  color="white"
+                  placeholder="username"
+                  placeholderTextColor="white"
+                  style={{
+                    fontSize: password ? 18 : 18,
+                    borderBottomWidth: 1,
+                    borderBottomColor: "gray",
+                    marginLeft: 13,
+                    width: 300,
+                    marginVertical: 10,
+                  }}
+                />
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <MaterialCommunityIcons
+                  name="email-outline"
+                  size={24}
+                  color="white"
+                />
+                <TextInput
+                  placeholder="Email"
+                  value={email}
+                  color="white"
+                  onChangeText={(text) => setEmail(text)}
+                  placeholderTextColor="white"
+                  style={{
+                    fontSize: email ? 18 : 18,
+                    borderBottomWidth: 1,
+                    borderBottomColor: "gray",
+                    marginLeft: 13,
+                    width: 300,
+                    marginVertical: 10,
+                  }}
+                />
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Ionicons name="key-outline" size={24} color="white" />
+                <TextInput
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
+                  color="white"
+                  secureTextEntry={!showPassword}
+                  placeholder="Password"
+                  placeholderTextColor="white"
+                  style={{
+                    fontSize: password ? 18 : 18,
+                    borderBottomWidth: 1,
+                    borderBottomColor: "gray",
+                    marginLeft: 13,
+                    width: 300,
+                    marginVertical: 20,
+                  }}
+                />
+                <Pressable
+                  onPress={() => setShowPassword((prevState) => !prevState)}
+                  style={{ marginLeft: -15 }}
+                >
+                  <Feather
+                    name={showPassword ? "eye-off" : "eye"}
+                    size={24}
+                    color="white"
+                  />
+                </Pressable>
+              </View>
+
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Feather name="phone" size={24} color="white" />
+                <TextInput
+                  value={phone}
+                  onChangeText={(text) => setPhone(text)}
+                  color="white"
+                  placeholder="Phone Number"
+                  placeholderTextColor="white"
+                  style={{
+                    fontSize: password ? 18 : 18,
+                    borderBottomWidth: 1,
+                    borderBottomColor: "gray",
+                    marginLeft: 13,
+                    width: 300,
+                    marginVertical: 10,
+                  }}
+                />
+              </View>
+
+              <Pressable
+                onPress={register}
+                style={{
+                  width: 200,
+                  backgroundColor: "orange",
+                  padding: 15,
+                  borderRadius: 7,
+                  marginTop: 50,
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
+              >
+                <Text
+                  style={{ fontSize: 18, textAlign: "center", color: "white" }}
+                >
+                  Register
+                </Text>
+              </Pressable>
+
+              <Pressable
+                onPress={() => navigation.goBack()}
+                style={{ marginTop: 20 }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 17,
+                    color: "gray",
+                    fontWeight: "500",
+                  }}
+                >
+                  Already have a account? Sign in
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+          </ScrollView>
+        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -186,3 +233,39 @@ const RegisterScreen = () => {
 export default RegisterScreen;
 
 const styles = StyleSheet.create({});
+// const register = () => {
+//   if (email === "" || password === "" || phone === "") {
+//     Alert.alert(
+//       "Invalid Details",
+//       "Please fill all the details",
+//       [
+//         {
+//           text: "Cancel",
+//           onPress: () => console.log("Cancel Pressed"),
+//           style: "cancel",
+//         },
+//         { text: "OK", onPress: () => console.log("OK Pressed") },
+//       ],
+//       { cancelable: false }
+//     );
+//   }
+//   createUserWithEmailAndPassword(auth, email, password)
+//     .then((userCredential) => {
+//       const userData = {
+//         name: userName,
+//         email: email,
+//         password: password,
+//         phone: phone,
+//       };
+//       const user = userCredential._tokenResponse.email;
+//       const myUserUid = auth.currentUser.uid;
+
+//       setDoc(doc(db, "users", `${myUserUid}`), userData);
+//       tokenUser(myUserUid);
+//       updateUser(userData, myUserUid);
+//       console.log("user registre");
+//     })
+//     .catch((err) => {
+//       Alert.alert("Error" + err);
+//     });
+// };
