@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `ed`.`admin` (
   `password` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -36,15 +36,13 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `ed`.`client` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `firstName` VARCHAR(255) NOT NULL,
-  `lastName` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `password` LONGTEXT NOT NULL,
   `phoneNumber` VARCHAR(255) NOT NULL,
-  `location` VARCHAR(255) NOT NULL,
   `friendList` LONGTEXT NULL DEFAULT NULL,
   `historyEvent` VARCHAR(255) NULL DEFAULT NULL,
-  `address` LONGTEXT NOT NULL,
-  `img` LONGTEXT NOT NULL,
+  `address` LONGTEXT NULL,
+  `img` LONGTEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
@@ -106,16 +104,14 @@ CREATE TABLE IF NOT EXISTS `ed`.`event` (
   `grade` INT NOT NULL,
   `category` VARCHAR(45) NOT NULL,
   `admin_id` INT NOT NULL,
-  `lineUp` LONGTEXT NULL,
-  `latitude` LONGTEXT NULL,
-  `longitude` LONGTEXT NULL,
+  `lineUp` LONGTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_event_admin1_idx` (`admin_id` ASC) VISIBLE,
   CONSTRAINT `fk_event_admin1`
     FOREIGN KEY (`admin_id`)
     REFERENCES `ed`.`admin` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8mb3;
 
 

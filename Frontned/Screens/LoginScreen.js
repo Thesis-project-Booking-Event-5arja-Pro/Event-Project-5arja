@@ -10,6 +10,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  Button,
+  Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState, useContext } from "react";
@@ -26,6 +28,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import URL from "../api/client";
 import HomeScreen from "./HomeScreen";
+import { firebase } from "@react-native-firebase/auth";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -35,10 +38,10 @@ const LoginScreen = () => {
   const [showPassword, setShowPassword] = useState(false);
   const authContext = useContext(AuthContext);
   const { updateUser, user } = useContext(AuthContext);
+  const { setEmailAuth } = useContext(AuthContext);
   const { token } = useContext(AuthContext);
   const handleBack = () => {
-   
-    navigation.navigate('main')
+    navigation.navigate("main");
   };
 
   const Login = () => {
@@ -49,16 +52,29 @@ const LoginScreen = () => {
       })
       .then((res) => {
         const token = res.data;
-        const infoDisplay=res.data.user
-        AsyncStorage.setItem('token',token.token)
-        updateUser(infoDisplay, token.token)
-        console.log("this my token :" + token.token);
-        console.log("infot user:" + infoDisplay.email);
-        navigation.navigate('main')
+        const infoDisplay = res.data.user;
+        const ImgUser = infoDisplay.img;
+        AsyncStorage.setItem("token", token.token);
+        updateUser(infoDisplay, token.token, ImgUser);
       })
-      .catch((err) =>{
-        console.log(err)
-         Alert.alert('Error','check your email or password')});
+      .catch((err) => {
+        console.log(err);
+        Alert.alert("Error", "check your email or password");
+      });
+  };
+  const LoginWithgoogle=()=>{
+    console.log("google singin");
+  }
+  const ForgetPassword = () => {
+    firebase
+      .auth()
+      .sendPasswordResetEmail(firebase.auth().currentUser.email)
+      .then(() => {
+        alert("password changed");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -70,7 +86,6 @@ const LoginScreen = () => {
         padding: 10,
       }}
     >
-    
       <Pressable
         style={{ position: "absolute", top: 10, left: 10 }}
         onPress={handleBack}
@@ -172,27 +187,73 @@ const LoginScreen = () => {
                   />
                 </Pressable>
               </View>
-
-              <Pressable
-                onPress={Login}
+              <View>
+                <Pressable onPress={() => ForgetPassword()}>
+                  <Text style={{ color: "red", marginLeft: 235, fontSize: 9 }}>
+                    Forget Password?
+                  </Text>
+                </Pressable>
+              </View>
+              <View
                 style={{
-                  width: 200,
-                  backgroundColor: "orange",
-                  padding: 15,
-                  borderRadius: 7,
+                  flexDirection: "row",
+                  justifyContent: "center",
                   marginTop: 50,
-                  marginLeft: "auto",
-                  marginRight: "auto",
+                  width: 320,
+                  height: 60,
+                  padding: 5,
                 }}
               >
-                <Text
-                  style={{ fontSize: 18, textAlign: "center", color: "white" }}
+                <Pressable
+                  onPress={Login}
+                  style={{
+                    width: 150,
+                    backgroundColor: "orange",
+                    padding: 15,
+                    borderRadius: 7,
+                    marginRight: 10,
+                    justifyContent: "center", 
+                  }}
                 >
-                  Login
-                </Text>
-              </Pressable>
-
-              <Pressable
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      textAlign: "center",
+                      color: "white",
+                      flexDirection: "row",
+                    }}
+                  >
+                    Login
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={LoginWithgoogle}
+                  style={{
+                    width: 150,
+                    backgroundColor: "white",
+                    padding: 15,
+                    borderRadius: 7,
+                    flexDirection: "row", 
+                    alignItems: "center", 
+                    marginRight: 10,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Image
+                    source={require("../assets/7123025_logo_google_g_icon.png")}
+                    style={{ width: 24, height: 24, marginRight: 10 }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: 12, 
+                      color: "black",
+                    }}
+                  >
+                    Sign in with Google
+                  </Text>
+                </Pressable>
+                </View>
+                 <Pressable
                 onPress={() => navigation.navigate("Reg")}
                 style={{ marginTop: 20 }}
               >

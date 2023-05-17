@@ -10,7 +10,7 @@ module.exports = {
     });
   },
   addClient: function (req, res) {
-    const { email, password } = req.body;
+    const { email, password, img } = req.body;
 
     // Generate a hash of the password
     bcrypt.hash(password, 10, (err, hashedPassword) => {
@@ -31,6 +31,7 @@ module.exports = {
             email: req.body.email,
             password: hashedPassword,
             phoneNumber: req.body.phoneNumber,
+            img: req.body.img,
           };
           client.add((error, results) => {
             if (error) {
@@ -108,6 +109,36 @@ module.exports = {
       [req.params.id]
     );
   },
-  
- 
-};
+  updateClient: function (req, res) {
+    const { password, email, firstName, phoneNumber } = req.body;
+client.getOneClientByEmail(email,(error, user)=>{
+  if (error) {
+    console.error("Error retrieving user:", error);
+    res.status(500).json({ error: "Sign-in failed" });
+    return;
+  }
+
+  if (!user) {
+    console.error("Sign-in failed: User not found");
+    res.status(401).json({ error: "Invalid email or password" });
+    return;
+  }
+ bcrypt.compare(password, user.password, (err, result) => {
+      if (err) {
+        res.status(401).send(err);
+      } else if (!result) {
+        res.status(401).send("Incorrect password");
+      } else {
+        client.updateOne(email, firstName, phoneNumber, (err, results) => {
+          if (err) {
+            console.error("Error updating client:", err);
+            res.status(500).send("Error updating client");
+          } else {
+            res.json(results);
+          }
+        });
+      }
+    });
+  },
+)}
+}
