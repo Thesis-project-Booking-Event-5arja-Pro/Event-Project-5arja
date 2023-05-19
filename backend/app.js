@@ -10,15 +10,17 @@ const ticketRoute = require("./routes/ticket");
 const event_attendanceRoute = require("./routes/event_attendance");
 const imageUploadRoute = require("./routes/uploadImage"); // Add this line
 const cors = require("cors");
-const cloudinary = require("./cloudinary");
-const workerRouter = express.Router();
+
+
+
 var admin = require("firebase-admin");
 
 var serviceAccount = require("./serviceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://kharja-26131-default-rtdb.europe-west1.firebasedatabase.app"
+  databaseURL:
+    "https://kharja-26131-default-rtdb.europe-west1.firebasedatabase.app",
 });
 
 app.use(cors({ origin: "http://192.168.1.13:5000 ", credentials: true }));
@@ -33,5 +35,6 @@ app.use("/api/post", postRoute);
 app.use("/api/feedback", feedbackRoute);
 app.use("/api/ticket", ticketRoute);
 app.use("/api/image-upload", imageUploadRoute);
+
 
 module.exports = app;

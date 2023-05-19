@@ -42,7 +42,7 @@ const RegisterScreen = () => {
   const register = () => {
     const info = {
       firstName: userName,
-      email: email,
+      email: email.trim(),
       password: password,
       phoneNumber: phone,
       img: profileIMG,
@@ -68,6 +68,7 @@ const RegisterScreen = () => {
         backgroundColor: "black",
         alignItems: "center",
         padding: 10,
+        marginLeft: -15,
       }}
     >
       <KeyboardAvoidingView>
@@ -82,15 +83,16 @@ const RegisterScreen = () => {
                   shouldPlay
                 />
               </View>
-              <View style={{top: -120, right: 10 }}>
-                <ImagePickerExample style={{ width: 30, height: 30 }} />
-              </View>
+
               <View
                 style={{
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
+                {/* <View style={{top: -120, right: 10 }}>
+                <ImagePickerExample style={{ width: 30, height: 30 }} />
+              </View> */}
                 <Text
                   style={{
                     fontSize: 18,
@@ -164,7 +166,7 @@ const RegisterScreen = () => {
                   />
                   <Pressable
                     onPress={() => setShowPassword((prevState) => !prevState)}
-                    style={{ marginLeft: -15 }}
+                    style={{ marginLeft: -20 }}
                   >
                     <Feather
                       name={showPassword ? "eye-off" : "eye"}
@@ -227,31 +229,6 @@ const RegisterScreen = () => {
                       }}
                     >
                       register
-                    </Text>
-                  </Pressable>
-                  <Pressable
-                    style={{
-                      width: 150,
-                      backgroundColor: "white",
-                      padding: 15,
-                      borderRadius: 7,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      marginRight: 10,
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Image
-                      source={require("../assets/7123025_logo_google_g_icon.png")}
-                      style={{ width: 24, height: 24, marginRight: 10 }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        color: "black",
-                      }}
-                    >
-                      Sign in with Google
                     </Text>
                   </Pressable>
                 </View>

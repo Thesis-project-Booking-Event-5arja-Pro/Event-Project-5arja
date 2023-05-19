@@ -56,9 +56,8 @@ const Setting = () => {
   const handleCloseModal = () => {
     handleUpdate();
     setShowModal(false);
-    if (handleUpdate()) {
-      navigation.navigate("profile");
-    } else return;
+
+    navigation.navigate("profile");
   };
 
   return (
@@ -80,6 +79,7 @@ const Setting = () => {
                   <Input
                     variant="underlined"
                     color={"white"}
+                    fontSize={"md"}
                     onChangeText={(text) => setNewPhone(text)}
                   />
                 </VStack>

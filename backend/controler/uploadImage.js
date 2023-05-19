@@ -2,7 +2,7 @@ const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 
 module.exports = {
-  uploadImage: async (req, res, next) => {
+  uploadImage: async (req, res) => {
     try {
       const { file } = req;
 

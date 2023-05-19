@@ -10,10 +10,19 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
-  Button,
   Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import {
+  Box,
+  VStack,
+  FormControl,
+  Input,
+  Button,
+  Modal,
+  NativeBaseProvider,
+} from "native-base";
+import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -25,10 +34,7 @@ import { Feather } from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { AuthContext } from "./AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import URL from "../api/client";
-import HomeScreen from "./HomeScreen";
-import { firebase } from "@react-native-firebase/auth";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -40,6 +46,8 @@ const LoginScreen = () => {
   const { updateUser, user } = useContext(AuthContext);
   const { setEmailAuth } = useContext(AuthContext);
   const { token } = useContext(AuthContext);
+  const [showModal, setShowModal] = useState(false);
+
   const handleBack = () => {
     navigation.navigate("main");
   };
@@ -47,7 +55,7 @@ const LoginScreen = () => {
   const Login = () => {
     axios
       .post(`http://${URL}:5000/api/client/singin`, {
-        email: email,
+        email: email.trim(),
         password: password,
       })
       .then((res) => {
@@ -62,21 +70,9 @@ const LoginScreen = () => {
         Alert.alert("Error", "check your email or password");
       });
   };
-  const LoginWithgoogle=()=>{
-    console.log("google singin");
-  }
-  const ForgetPassword = () => {
-    firebase
-      .auth()
-      .sendPasswordResetEmail(firebase.auth().currentUser.email)
-      .then(() => {
-        alert("password changed");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+const handleForgetPassword=()=>{
+  navigation.navigate('forget')
+}
   return (
     <SafeAreaView
       style={{
@@ -84,15 +80,18 @@ const LoginScreen = () => {
         backgroundColor: "black",
         alignItems: "center",
         padding: 10,
+        marginTop: -13,
+        marginLeft: -4,
       }}
     >
-      <Pressable
-        style={{ position: "absolute", top: 10, left: 10 }}
-        onPress={handleBack}
-      >
-        <MaterialIcons name="arrow-back" size={28} color="white" />
-      </Pressable>
       <ScrollView>
+        <Pressable
+          style={{ position: "absolute", top: 10, left: 10 }}
+          onPress={handleBack}
+        >
+          <MaterialIcons name="arrow-back" size={28} color="white" />
+        </Pressable>
+
         <View style={{}}>
           <Video
             source={require("../unit/txt.mp4")}
@@ -160,6 +159,7 @@ const LoginScreen = () => {
 
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Ionicons name="key-outline" size={24} color="white" />
+                {/* ______________________passwordd_____________________________*/}
                 <TextInput
                   value={password}
                   onChangeText={(text) => setPassword(text)}
@@ -178,17 +178,17 @@ const LoginScreen = () => {
                 />
                 <Pressable
                   onPress={() => setShowPassword((prevState) => !prevState)}
-                  style={{ marginLeft: -15 }}
+                  style={{ marginLeft: -30 }}
                 >
                   <Feather
                     name={!showPassword ? "eye-off" : "eye"}
-                    size={24}
+                    size={23}
                     color="white"
                   />
                 </Pressable>
               </View>
               <View>
-                <Pressable onPress={() => ForgetPassword()}>
+                <Pressable onPress={() => handleForgetPassword()}>
                   <Text style={{ color: "red", marginLeft: 235, fontSize: 9 }}>
                     Forget Password?
                   </Text>
@@ -212,7 +212,7 @@ const LoginScreen = () => {
                     padding: 15,
                     borderRadius: 7,
                     marginRight: 10,
-                    justifyContent: "center", 
+                    justifyContent: "center",
                   }}
                 >
                   <Text
@@ -226,34 +226,8 @@ const LoginScreen = () => {
                     Login
                   </Text>
                 </Pressable>
-                <Pressable
-                  onPress={LoginWithgoogle}
-                  style={{
-                    width: 150,
-                    backgroundColor: "white",
-                    padding: 15,
-                    borderRadius: 7,
-                    flexDirection: "row", 
-                    alignItems: "center", 
-                    marginRight: 10,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Image
-                    source={require("../assets/7123025_logo_google_g_icon.png")}
-                    style={{ width: 24, height: 24, marginRight: 10 }}
-                  />
-                  <Text
-                    style={{
-                      fontSize: 12, 
-                      color: "black",
-                    }}
-                  >
-                    Sign in with Google
-                  </Text>
-                </Pressable>
-                </View>
-                 <Pressable
+              </View>
+              <Pressable
                 onPress={() => navigation.navigate("Reg")}
                 style={{ marginTop: 20 }}
               >

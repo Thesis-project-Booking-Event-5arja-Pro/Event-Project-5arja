@@ -15,7 +15,9 @@ import RegisterScreen from "./Screens/RegisterScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import Setting from "./Screens/Setting";
 import Help from "./Screens/Help";
+
 import { AuthContext } from "./Screens/AuthContext";
+import ForgetPassword from "./Screens/ForgetPassword";
 
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -63,6 +65,23 @@ const StackNavigator = () => {
         <Tab.Screen
           name="account"
           component={RegisterScreen}
+          options={{
+            tabBarButton: () => null, // Hide the tab button
+            tabBarLabelStyle: { display: "none" }, // Hide the tab label
+          }}
+        />
+    
+           <Tab.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{
+            tabBarButton: () => null, // Hide the tab button
+            tabBarLabelStyle: { display: "none" }, // Hide the tab label
+          }}
+        />
+         <Tab.Screen
+          name="forget"
+          component={ForgetPassword}
           options={{
             tabBarButton: () => null, // Hide the tab button
             tabBarLabelStyle: { display: "none" }, // Hide the tab label

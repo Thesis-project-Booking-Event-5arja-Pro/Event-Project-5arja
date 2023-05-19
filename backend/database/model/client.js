@@ -48,5 +48,11 @@ module.exports = {
       callback(err, results);
     });
   },
-  
+  updatePassword: function (email, hashedPassword, callback) {
+    const sql = "UPDATE `client` SET password = ? WHERE email = ?";
+    conn.query(sql, [hashedPassword, email], function (err, results) {
+      callback(err, results);
+    });
+  },
 };
+
