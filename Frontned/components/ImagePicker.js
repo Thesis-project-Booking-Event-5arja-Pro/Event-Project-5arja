@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, Pressable, View, Image,Text } from "react-native";
+import { StyleSheet, Pressable, View, Image, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker/src/ImagePicker";
 import { Avatar } from "native-base";
 import { Center, Actionsheet, useDisclose } from "native-base";
@@ -12,9 +12,6 @@ export default function ImagePickerExample() {
   const { isOpen, onOpen, onClose } = useDisclose();
   const { setProfileIMG } = useContext(AuthContext);
   const { profileIMG } = useContext(AuthContext);
-
-
-
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -26,7 +23,7 @@ export default function ImagePickerExample() {
       }
     })();
   }, []);
-console.log();
+  console.log();
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -40,7 +37,7 @@ console.log();
       setProfileIMG(uri);
     }
   };
-
+  console.log(profileIMG);
   const takePhoto = async () => {
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
@@ -50,14 +47,14 @@ console.log();
     });
     if (!result.canceled && result.assets?.length > 0) {
       const uri = result.assets[0].uri;
-   setImage(uri);
+      setImage(uri);
+      handleSave(uri);
       setProfileIMG(uri);
-     
     } else {
       console.log("Image selection canceled.");
     }
   };
-console.log(image);
+
   const handleSave = async () => {
     const data = new FormData();
     data.append("profile-image", {
@@ -75,34 +72,30 @@ console.log(image);
           },
         }
       );
-      handleSave()
-      
+      handleSave(uri);
+      setProfileIMG(uri);
       setImage(response.data);
-      handleSave()
     } catch (error) {
       console.error("Error uploading image:", error);
     }
   };
-
-
+  console.log(image);
   const selectImage = () => {
-    handleSave()
     onOpen();
   };
 
   return (
     <Center>
-      <View style={{ width: 50, height: 50, borderRadius: 25 }}>
+      <View style={{ width: 50, marginLeft: -75, borderRadius: 25 }}>
         <Pressable onPress={onOpen}>
           <Avatar
-            bg="purple.600"
-            alignSelf="center"
+            bg="white"
             size="2xl"
             source={{
-              uri: image,
+              uri: profileIMG,
             }}
           >
-            <Text>upload profil picture</Text>
+            <Text style={{fontSize:15,fontWeight:"bold"}}>upload profil picture</Text>
           </Avatar>
         </Pressable>
         <Center>

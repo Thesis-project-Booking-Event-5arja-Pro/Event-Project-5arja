@@ -54,4 +54,9 @@ module.exports = {
       callback(err, results);
     });
   },
+<<<<<<< HEAD
 };
+=======
+};
+
+>>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c

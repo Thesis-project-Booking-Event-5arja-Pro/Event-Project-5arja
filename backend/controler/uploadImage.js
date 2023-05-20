@@ -5,6 +5,7 @@ module.exports = {
   uploadImage: async (req, res) => {
     try {
       const { file } = req;
+<<<<<<< HEAD
      
 
       // Configure Cloudinary with your credentials
@@ -12,6 +13,14 @@ module.exports = {
         cloud_name: "dzgsr9fgg",
         api_key: "176655669282821",
         api_secret: "QJz5EoeOzHe8qkhr4AEx7ATfaCQ",
+=======
+
+      // SEND FILE TO CLOUDINARY
+      cloudinary.config({
+        cloud_name: "decy2t1yc",
+        api_key: "797587299415564",
+        api_secret: "rqxN_N9DRijkn_qF-rqW1zag6d8",
+>>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
       });
       
 

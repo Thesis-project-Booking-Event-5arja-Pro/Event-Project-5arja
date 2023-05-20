@@ -37,4 +37,8 @@ app.use("/api/ticket", ticketRoute);
 app.use("/api/image-upload", imageUploadRoute);
 
 
+<<<<<<< HEAD
 module.exports = app;
+=======
+module.exports = app;
+>>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c

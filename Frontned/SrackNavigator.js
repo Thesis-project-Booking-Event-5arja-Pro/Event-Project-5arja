@@ -15,10 +15,17 @@ import RegisterScreen from "./Screens/RegisterScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import Setting from "./Screens/Setting";
 import Help from "./Screens/Help";
+<<<<<<< HEAD
 import Screenpayment from "./Screens/Scrennpayment.js"
 import { AuthContext } from "./Screens/AuthContext";
 import ForgetPassword from "./Screens/ForgetPassword";
 import Qrpurche from "./Screens/Qrpurche.js"
+=======
+
+import { AuthContext } from "./Screens/AuthContext";
+import ForgetPassword from "./Screens/ForgetPassword";
+
+>>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();

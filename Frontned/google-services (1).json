@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "591902300639",
+    "firebase_url": "https://kharja-26131-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "kharja-26131",
+    "storage_bucket": "kharja-26131.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591902300639:android:98e58a70da67f9a2d14c6a",
+        "android_client_info": {
+          "package_name": "com.kharja1.kharja"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591902300639-ejt9tj4hlu8aouse2up56d0o9vo5a89h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPV-QO-e2gPT4nyciENU1ELzfCFghvhhA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591902300639-ejt9tj4hlu8aouse2up56d0o9vo5a89h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "591902300639-d6ojgunc22otla5oh9s1q4hq5k1jqls9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kharja1.kharja"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

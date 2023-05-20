@@ -79,7 +79,11 @@ const RegisterScreen = () => {
               <View style={{}}>
                 <Video
                   source={require("../unit/txt.mp4")}
+<<<<<<< HEAD
                   style={{ height: 300, width: 300 , marginLeft:30  }}
+=======
+                  style={{ height: 300, width: 300 }}
+>>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
                   resizeMode="cover"
                   shouldPlay
                 />

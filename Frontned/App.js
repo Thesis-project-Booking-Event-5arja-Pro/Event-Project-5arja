@@ -2,21 +2,21 @@ import "react-native-gesture-handler";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native";
 import StackNavigator from "./SrackNavigator";
-import { NativeBaseProvider } from "native-base";
+import { Center, NativeBaseProvider } from "native-base";
 import "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AuthContext } from "./Screens/AuthContext";
 import { AuthProvider } from "./Screens/AuthContext";
-
+import ProfileScreen from "./Screens/ProfileScreen";
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [userData, setUserData] = useState(null);
- 
+  const [img, setImg] = useState(null);
+
   return (
     <>
       <NativeBaseProvider>
-        <AuthProvider >
+        <AuthProvider>
           <TouchableWithoutFeedback>
             <StackNavigator />
           </TouchableWithoutFeedback>

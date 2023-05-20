@@ -82,4 +82,8 @@ export default function ProfileScreen() {
       </ScrollView>
     </SafeAreaView>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c

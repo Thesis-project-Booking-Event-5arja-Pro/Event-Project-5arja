@@ -4,15 +4,24 @@ USE `ed` ;
 CREATE TABLE IF NOT EXISTS `ed`.`admin` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(45) NOT NULL,
+<<<<<<< HEAD
   `password` LONGTEXT NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb3;
+=======
+  `password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8mb3;
+>>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
 
 
 INSERT INTO `ed`.`admin` (`email`, `password`) VALUES ('yassinbez@gmail.com', 'password123');
 
 CREATE TABLE IF NOT EXISTS `ed`.`client` (
   `id` INT NOT NULL AUTO_INCREMENT,
+<<<<<<< HEAD
   `firstName` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `password` LONGTEXT NOT NULL,
@@ -22,6 +31,20 @@ CREATE TABLE IF NOT EXISTS `ed`.`client` (
   `img` LONGTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARACTER SET = utf8mb3;
+=======
+  `firstName` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `password` LONGTEXT NOT NULL,
+  `phoneNumber` VARCHAR(255) NOT NULL,
+  `friendList` LONGTEXT NULL DEFAULT NULL,
+  `historyEvent` VARCHAR(255) NULL DEFAULT NULL,
+  `address` LONGTEXT NULL,
+  `img` LONGTEXT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8mb3;
+>>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
 
 CREATE TABLE IF NOT EXISTS `ed`.`event` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -39,10 +62,15 @@ CREATE TABLE IF NOT EXISTS `ed`.`event` (
   `longitude` FLOAT,
   `latitude` FLOAT,
   `admin_id` INT NOT NULL,
+<<<<<<< HEAD
+=======
+  `lineUp` LONGTEXT NULL DEFAULT NULL,
+>>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
   PRIMARY KEY (`id`),
   INDEX `fk_event_admin1_idx` (`admin_id` ASC) VISIBLE,
   CONSTRAINT `fk_event_admin1`
     FOREIGN KEY (`admin_id`)
+<<<<<<< HEAD
     REFERENCES `ed`.`admin` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
@@ -60,6 +88,12 @@ VALUES
 ('Techno Playground', 'https://img.traveltriangle.com/blog/wp-content/uploads/2019/01/techno-festivals-in-europe-cover.jpg', 'https://example.com/event6_video.mp4', 'Welcome to the Techno Playground, where you can unleash your inner child and dance to the infectious beats of techno music. Prepare for an immersive experience filled with interactive installations, colorful visuals, and non-stop dancing. Let your imagination run wild!', 'Maceo Plex, Amelie Lens, Tale Of Us', '2023-07-01 19:00:00', '2023-07-02 03:00:00', 75, 4, 'Techno', 'Park Plaza', 10.444444, 36.777777, 1),
 ('Techno Groove', 'https://static.toiimg.com/photo/95373891.cms', 'https://example.com/event7_video.mp4', 'Get ready to groove to the hypnotic Techno Groove that will keep you dancing all night long. Renowned DJs will take you on a sonic journey through thumping basslines, melodic synths, and infectious rhythms. Let the music move your body!', 'Joseph Capriati, Pan-Pot, Charlotte de Witte', '2023-07-08 22:00:00', '2023-07-09 04:00:00', 80, 4, 'Techno', 'The Warehouse', 10.666666, 36.888888, 1),
 ('Techno Utopia', 'https://www.digitalmusicnews.com/wp-content/uploads/2021/05/english-concert-covid-feat.jpeg', 'https://example.com/event8_video.mp4', "Embark on a journey to Techno Utopia, where the boundaries of reality are blurred by mesmerizing sounds and visuals. Lose yourself in the euphoria of techno music as you dance alongside fellow utopians.  an otherworldly experience you won't want to miss!", 'Amelie Lens, Adam Beyer, Tale Of Us', '2023-07-15 21:30:00', '2023-07-16 05:30:00', 100, 5, 'Techno', 'Secret Location', 10.333333, 36.999999, 1);
+=======
+    REFERENCES `ed`.`admin` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 12
+DEFAULT CHARACTER SET = utf8mb3;
+>>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
 
 
 CREATE TABLE IF NOT EXISTS `ed`.`event_attendance` (

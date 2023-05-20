@@ -64,16 +64,25 @@ const LoginScreen = () => {
         const ImgUser = infoDisplay.img;
         AsyncStorage.setItem("token", token.token);
         updateUser(infoDisplay, token.token, ImgUser);
+<<<<<<< HEAD
         navigation.navigate('main')
+=======
+>>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
       })
       .catch((err) => {
         console.log(err);
         Alert.alert("Error", "check your email or password");
       });
   };
+<<<<<<< HEAD
   const handleForgetPassword = () => {
     navigation.navigate('forget')
   }
+=======
+const handleForgetPassword=()=>{
+  navigation.navigate('forget')
+}
+>>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
   return (
     <SafeAreaView
       style={{

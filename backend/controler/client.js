@@ -4,7 +4,11 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const validator = require("email-validator");
 const { google } = require("googleapis");
+<<<<<<< HEAD
 const AccessToken="ya29.a0AWY7CknCnPmczY6IskR20AkMeTXIzdOhMW1CFnKAHau4i0P0EbGv4oLX9eb5vGn_YL8IJJl5zHBiDlP0d5XAt9tU4qH_uk3myhselKlmnLaYysxqZVN2wexX4ZWOvStO6mtON-0b_oSrJs0yI29m0E7O33JTzbMaCgYKAa8SARASFQG1tDrp6yTaYDzn0evPRQi5wLPgcw0166"
+=======
+const AccessToken="ya29.a0AWY7CknJA7MAiH7qf573yoVkzdHE8zm75ElI1mWd0NjWKrapuwGL_baXPC7fFyM7MOYsXpzxMgO72hh5bUPd9U_Q03kwbo6VUjoAe3USmrBcbS_GQxz9bjK7TAgQnYmT4GdVB5HRpUJ4y670mUY3zjh6gSrRaCgYKAScSARASFQG1tDrpA4sgjalTUKBVrILCiD_Jtg0163"
+>>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
 const refreshToken="1//04VPp5gGdZbT_CgYIARAAGAQSNgF-L9IrCQUIGpqzss356QVLSScItBDdrpE7GAyqxL6_HQ89rxoPK9Qvn3WFNU0SS-R6OqXNtg"
 module.exports = {
   getAllClients(req, res) {
