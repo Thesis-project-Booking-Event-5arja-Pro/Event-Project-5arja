@@ -15,8 +15,10 @@ import RegisterScreen from "./Screens/RegisterScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import Setting from "./Screens/Setting";
 import Help from "./Screens/Help";
+import Screenpayment from "./Screens/Scrennpayment.js"
 import { AuthContext } from "./Screens/AuthContext";
-
+import ForgetPassword from "./Screens/ForgetPassword";
+import Qrpurche from "./Screens/Qrpurche.js"
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
@@ -63,6 +65,23 @@ const StackNavigator = () => {
         <Tab.Screen
           name="account"
           component={RegisterScreen}
+          options={{
+            tabBarButton: () => null, // Hide the tab button
+            tabBarLabelStyle: { display: "none" }, // Hide the tab label
+          }}
+        />
+    
+           <Tab.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{
+            tabBarButton: () => null, // Hide the tab button
+            tabBarLabelStyle: { display: "none" }, // Hide the tab label
+          }}
+        />
+         <Tab.Screen
+          name="forget"
+          component={ForgetPassword}
           options={{
             tabBarButton: () => null, // Hide the tab button
             tabBarLabelStyle: { display: "none" }, // Hide the tab label
@@ -139,6 +158,11 @@ const StackNavigator = () => {
           component={Seeallticket}
           options={{ headerShown: false }}
         />
+          <Stack.Screen
+          name="payment"
+          component={Screenpayment}
+          options={{ headerShown: false }}
+        />
 
         <Stack.Screen
           name="tikcet"
@@ -153,6 +177,11 @@ const StackNavigator = () => {
         <Stack.Screen
           name="Reg"
           component={RegisterScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="qr"
+          component={Qrpurche}
           options={{ headerShown: false }}
         />
         <Stack.Screen

@@ -9,15 +9,29 @@ import Soon from '../components/Soon'
 import { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 import Nearyou from '../components/Nearyou';
+import URL from "../api/client";
+import axios from "axios"
 
 
 const HomeScreen = () => {
   const [location, setLocation] = useState();
   const [address, setAddress] = useState();
   const [showLoc, handleShow ]= useState(true)
+  const [dataevent,setdata]=useState()
 
-
+  useEffect(() => {
+    axios.get(`http://${URL}:5000/api/event/getAllevent`)
+      .then((res) => {
+        setdata(res.data); // Access the 'data' property of the response object
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   
+
+
+  console.log(dataevent,);
 
 
   Location.setGoogleApiKey("AIzaSyD5GUOMMrDY5Ml8JOQ5j7z7p9f8GaGCDBg");
@@ -53,13 +67,13 @@ const HomeScreen = () => {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "black" }}>
       <Header />
-      <Render />
+      <Render  data={dataevent} />
 
      
 
   
-        <Soon />
-        <Nearyou latitude={location?.coords?.latitude} longitude={location?.coords?.longitude} />
+        <Soon data={dataevent} />
+        <Nearyou latitude={location?.coords?.latitude} longitude={location?.coords?.longitude} data={dataevent}  />
       
 
     </ScrollView>

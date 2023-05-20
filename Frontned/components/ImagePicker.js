@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Pressable, View } from "react-native";
-import * as ImagePicker from "expo-image-picker";
+import React, { useState, useEffect, useContext } from "react";
+import { StyleSheet, Pressable, View, Image,Text } from "react-native";
+import * as ImagePicker from "expo-image-picker/src/ImagePicker";
 import { Avatar } from "native-base";
 import { Center, Actionsheet, useDisclose } from "native-base";
 import axios from "axios";
 import URL from "../api/client";
+import { AuthContext } from "../Screens/AuthContext";
+
 export default function ImagePickerExample() {
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclose();
+  const { setProfileIMG } = useContext(AuthContext);
+  const { profileIMG } = useContext(AuthContext);
+
+
 
   useEffect(() => {
     (async () => {
@@ -20,37 +26,18 @@ export default function ImagePickerExample() {
       }
     })();
   }, []);
-
-  const handleUploadImage = (uri) => {
-    const formData = new FormData();
-    formData.append("profileImage", {
-      uri: uri,
-      type: "image/jpeg",
-      name: "profile.jpg",
-    });
-  
-    // Make a POST request to your backend API endpoint for image upload
-    axios
-      .post(`http://${URL}:5000/api/client/profile-image`, formData)
-      .then((response) => {
-        console.log("Image uploaded successfully:", response.data);
-      })
-      .catch((error) => {
-        console.log("Error uploading image:", error);
-      });
-  };
-  
+console.log();
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-    if (!result.cancelled) {
-      const uri = result.uri;
+    if (!result.canceled && result.assets.length > 0) {
+      const uri = result.assets[0].uri;
       setImage(uri);
-      handleUploadImage(uri); // Pass the URI to handleUploadImage
+      setProfileIMG(uri);
     }
   };
 
@@ -61,16 +48,45 @@ export default function ImagePickerExample() {
       quality: 1,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
     });
-    if (!result.cancelled) {
-      const uri = result.uri;
-      setImage(uri);
-      handleUploadImage(uri); // Pass the URI to handleUploadImage
+    if (!result.canceled && result.assets?.length > 0) {
+      const uri = result.assets[0].uri;
+   setImage(uri);
+      setProfileIMG(uri);
+     
     } else {
       console.log("Image selection canceled.");
     }
   };
+console.log(image);
+  const handleSave = async () => {
+    const data = new FormData();
+    data.append("profile-image", {
+      uri: image,
+      type: "image/jpeg",
+      name: "profile-image.jpg",
+    });
+    try {
+      const response = await axios.post(
+        `${URL}/api/image-upload/uploadFile`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      handleSave()
+      
+      setImage(response.data);
+      handleSave()
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
 
   const selectImage = () => {
+    handleSave()
     onOpen();
   };
 
@@ -78,7 +94,16 @@ export default function ImagePickerExample() {
     <Center>
       <View style={{ width: 50, height: 50, borderRadius: 25 }}>
         <Pressable onPress={onOpen}>
-          <Avatar source={{ uri: image }}></Avatar>
+          <Avatar
+            bg="purple.600"
+            alignSelf="center"
+            size="2xl"
+            source={{
+              uri: image,
+            }}
+          >
+            <Text>upload profil picture</Text>
+          </Avatar>
         </Pressable>
         <Center>
           <View onPress={selectImage}>

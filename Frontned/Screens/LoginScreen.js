@@ -10,8 +10,19 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import {
+  Box,
+  VStack,
+  FormControl,
+  Input,
+  Button,
+  Modal,
+  NativeBaseProvider,
+} from "native-base";
+import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -23,9 +34,7 @@ import { Feather } from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { AuthContext } from "./AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import URL from "../api/client";
-import HomeScreen from "./HomeScreen";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -35,32 +44,36 @@ const LoginScreen = () => {
   const [showPassword, setShowPassword] = useState(false);
   const authContext = useContext(AuthContext);
   const { updateUser, user } = useContext(AuthContext);
+  const { setEmailAuth } = useContext(AuthContext);
   const { token } = useContext(AuthContext);
+  const [showModal, setShowModal] = useState(false);
+
   const handleBack = () => {
-   
-    navigation.navigate('main')
+    navigation.navigate("main");
   };
 
   const Login = () => {
     axios
       .post(`http://${URL}:5000/api/client/singin`, {
-        email: email,
+        email: email.trim(),
         password: password,
       })
       .then((res) => {
         const token = res.data;
-        const infoDisplay=res.data.user
-        AsyncStorage.setItem('token',token.token)
-        updateUser(infoDisplay, token.token)
-        console.log("this my token :" + token.token);
-        console.log("infot user:" + infoDisplay.email);
+        const infoDisplay = res.data.user;
+        const ImgUser = infoDisplay.img;
+        AsyncStorage.setItem("token", token.token);
+        updateUser(infoDisplay, token.token, ImgUser);
         navigation.navigate('main')
       })
-      .catch((err) =>{
-        console.log(err)
-         Alert.alert('Error','check your email or password')});
+      .catch((err) => {
+        console.log(err);
+        Alert.alert("Error", "check your email or password");
+      });
   };
-
+  const handleForgetPassword = () => {
+    navigation.navigate('forget')
+  }
   return (
     <SafeAreaView
       style={{
@@ -68,20 +81,22 @@ const LoginScreen = () => {
         backgroundColor: "black",
         alignItems: "center",
         padding: 10,
+        marginTop: -13,
+        marginLeft: -4,
       }}
     >
-    
-      <Pressable
-        style={{ position: "absolute", top: 10, left: 10 }}
-        onPress={handleBack}
-      >
-        <MaterialIcons name="arrow-back" size={28} color="white" />
-      </Pressable>
       <ScrollView>
+        <Pressable
+          style={{ position: "absolute", top: 10, left: 10 }}
+          onPress={handleBack}
+        >
+          <MaterialIcons name="arrow-back" size={28} color="white" />
+        </Pressable>
+
         <View style={{}}>
           <Video
             source={require("../unit/txt.mp4")}
-            style={{ height: 300, width: 300 }}
+            style={{ height: 300, width: 300 , marginLeft:30 }}
             resizeMode="cover"
             shouldPlay
           />
@@ -145,6 +160,7 @@ const LoginScreen = () => {
 
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Ionicons name="key-outline" size={24} color="white" />
+                {/* ______________________passwordd_____________________________*/}
                 <TextInput
                   value={password}
                   onChangeText={(text) => setPassword(text)}
@@ -163,35 +179,55 @@ const LoginScreen = () => {
                 />
                 <Pressable
                   onPress={() => setShowPassword((prevState) => !prevState)}
-                  style={{ marginLeft: -15 }}
+                  style={{ marginLeft: -30 }}
                 >
                   <Feather
                     name={!showPassword ? "eye-off" : "eye"}
-                    size={24}
+                    size={23}
                     color="white"
                   />
                 </Pressable>
               </View>
-
-              <Pressable
-                onPress={Login}
+              <View>
+                <Pressable onPress={() => handleForgetPassword()}>
+                  <Text style={{ color: "red", marginLeft: 235, fontSize: 9 }}>
+                    Forget Password?
+                  </Text>
+                </Pressable>
+              </View>
+              <View
                 style={{
-                  width: 200,
-                  backgroundColor: "orange",
-                  padding: 15,
-                  borderRadius: 7,
+                  flexDirection: "row",
+                  justifyContent: "center",
                   marginTop: 50,
-                  marginLeft: "auto",
-                  marginRight: "auto",
+                  width: 320,
+                  height: 60,
+                  padding: 5,
                 }}
               >
-                <Text
-                  style={{ fontSize: 18, textAlign: "center", color: "white" }}
+                <Pressable
+                  onPress={Login}
+                  style={{
+                    width: 150,
+                    backgroundColor: "orange",
+                    padding: 15,
+                    borderRadius: 7,
+                    marginRight: 10,
+                    justifyContent: "center",
+                  }}
                 >
-                  Login
-                </Text>
-              </Pressable>
-
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      textAlign: "center",
+                      color: "white",
+                      flexDirection: "row",
+                    }}
+                  >
+                    Login
+                  </Text>
+                </Pressable>
+              </View>
               <Pressable
                 onPress={() => navigation.navigate("Reg")}
                 style={{ marginTop: 20 }}
@@ -218,25 +254,3 @@ const LoginScreen = () => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({});
-// useEffect(() => {
-//   setLoading(false);
-//   const unsubscribe = auth.onAuthStateChanged((authUser) => {
-//     console.log(authUser);
-//     if (!authUser) {
-//       setLoading(false);
-//     }
-//     if (authUser) {
-//       updateUser(userData, myUserUid)
-//       navigation.navigate("Home");
-//     }
-//   });
-
-//   return unsubscribe;
-// }, []);
-
-// const login = () => {
-//   signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-//     const user = userCredential.user;
-//     console.log("user details", user);
-//   });
-// };

@@ -15,7 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 
 const Header = () => {
-    const API_KEY = '244299d2237389563a6bb563cce0b0c25';
+    const API_KEY = '244299d2237389563a6bb563cce0b0c2';
 
     const IPSTACK_API_ENDPOINT = `http://api.ipstack.com/check?access_key=${API_KEY}`;
     const [adress, setAdress] = useState("")

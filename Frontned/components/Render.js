@@ -7,35 +7,40 @@ import React from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import { McText, McIcon, McAvatar } from '../comp'
 
-const DATA = [
-    { id: '1', title: 'https://themusicessentials.com/wp-content/uploads/2016/11/unnamed-2-15-696x464.jpg' ,   latitude: 45.8942635655478289, longitude: 10.18710378287, name:"Tatak dom tak", date: "2023-05-15", lineup: "Sven Väth, Nina Kraviz, Ilario Alicante, Adam Beyer, Richie Hawtin, Craig Richards, DJ Koze, Gerd Janson, Seth Troxler and Ricardo Villalobos.", localstion: "mexuioscjc", desc: "Born in Toronto, Karm moved to Italy when he was just a child. It was at the tender age of ten when his parents took him to a classical concert that he felt “true love at first sight.” He dreamed of becoming a pianist but eventually settled for law school. Matteo left New York when he was just a year old and spent his late teens booking techno artists for his loft parties. After Karm quit law school, the pair met while studying music production at the SAE Institute." },
-    { id: '2', title: 'https://imageio.forbes.com/blogs-images/lisakocay/files/2018/09/r85N0KgQ.jpeg?format=jpg&width=1200',latitude: 45.8942635655478289, longitude: 10.18710378287 ,  name:"event chikimama"  , date: "5/02/20225", lineup: "argey,daniel", localstion: "mexuioscjc", desc: "ras tnbirs"},
-    { id: '3', title: 'https://themusicessentials.com/wp-content/uploads/2016/11/unnamed-2-15-696x464.jpg', latitude: 45.8942635655478289, longitude: 10.18710378287 ,  name:"event chikombo"   , date: "5/02/20225", lineup: "argey,daniel", localstion: "mexuioscjc", desc: "ras tnbirs" },
-    { id: '4', title: 'https://imageio.forbes.com/blogs-images/lisakocay/files/2018/09/r85N0KgQ.jpeg?format=jpg&width=1200' ,  latitude: 45.8942635655478289, longitude: 10.18710378287 , name:"event chbikyaMama"  , date: "5/02/20225", lineup: "argey,daniel", localstion: "mexuioscjc", desc: "ras tnbirs"  },
-    { id: '5', title: 'Item 5' },
-];
-const Render = () => {
+
+const Render = ({ data }) => {
     const navigation = useNavigation();
 
     const handleSeeAllPress = () => {
-       
-        navigation.navigate('SeeAll');
+
+        navigation.navigate('see all');
     };
 
     const handleImagePress = (item) => {
         navigation.navigate('tikcet', { item });
     };
+    const formatDate = (dateString) => {
+        const options = {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+        };
+        const date = new Date(dateString);
+        return date.toLocaleDateString(undefined, options);
+    };
+
 
     const renderItem = ({ item, index }) => (
-        <TouchableOpacity onPress={() => handleImagePress(item)}>
-            <View style={{ marginLeft: 20 }}>
-                <ImageBackground source={{ uri: item.title }}  resizeMode='cover' style={{ width: 330, height: 350, marginTop: 20 }} />
+
+        <TouchableOpacity onPress={() => { console.log(item, "item"), handleImagePress(item) }} activeOpacity={0.6}>
+            <View style={{}}>
+                <ImageBackground source={{ uri: item.img }} borderRadius={20} resizeMode='cover' style={{ width: 330, height: 380, marginTop: 20, marginLeft: 20 }} />
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: 20, marginTop: -80 }}>
-                    <View>
-                        <McText h2>Tale of us</McText>
-                        <McText h5 style={{}}>1 dec - jakarta indonesia</McText>
+                    <View style={{ position: "absolute", top: -30, left: 20, marginTop: -30 }}>
+                        <McText h1 style={{ fontWeight: "bold", color: "white", marginTop: -20 }}>{item.eventName}</McText>
+                        <McText h4 style={{ fontWeight: "bold" }}>{formatDate(item.start_time)}</McText>
                     </View>
-                    <MaterialIcons name="favorite-border" size={30} color="white" style={{}} />
+
                 </View>
             </View>
 
@@ -53,9 +58,9 @@ const Render = () => {
             <FlatList
                 horizontal
                 contentContainerStyle={{}}
-                data={DATA}
+                data={data}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id} 
+                keyExtractor={(item) => item.id}
             />
 
 

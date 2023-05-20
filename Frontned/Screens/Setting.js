@@ -1,98 +1,166 @@
+import React, { useContext, useState } from "react";
 import {
   View,
   SafeAreaView,
   TouchableWithoutFeedback,
   Keyboard,
-  ScrollView,
-  Pressable,
 } from "react-native";
-import React from "react";
-import ImagePickerExample from "../components/ImagePicker";
-import tailwind from "twrnc";
 import {
-  Avatar,
   Box,
-  FormControl,
-  Stack,
-  Input,
-  Text,
-  Heading,
-  Center,
   VStack,
-  IconButton,
+  FormControl,
+  Input,
+  Button,
+  Modal,
+  NativeBaseProvider,
 } from "native-base";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import URL from "../api/client";
+import { AuthContext } from "./AuthContext";
 
 const Setting = () => {
   const navigation = useNavigation();
+  const [username, setUsername] = useState("");
+  const [newPhone, setNewPhone] = useState("");
+  const [passwordValid, setPasswordValid] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const { user, updateUser, token, profileIMG } = useContext(AuthContext);
+
+  const handleUpdate = () => {
+    const info = {
+      firstName: username,
+      phoneNumber: newPhone,
+      email: user.email,
+      password: passwordValid,
+    };
+    axios
+      .put(`http://${URL}:5000/api/client/updateclient`, info)
+      .then((res) => {
+        console.log(res.data);
+        updateUser(info, token, profileIMG);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleBack = () => {
-    navigation.goBack()
+    navigation.goBack();
     console.log("handleBack pressed!");
   };
+
   const handleSave = () => {
-    navigation.navigate("Profile");
+    setShowModal(true);
   };
+
+  const handleCloseModal = () => {
+    handleUpdate();
+    setShowModal(false);
+
+    navigation.navigate("profile");
+  };
+
   return (
-    <SafeAreaView style={tailwind`flex-1 bg-black`}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={tailwind`flex-1 items-center justify-center gap-8`}>
-          <Pressable
-            style={{ position: "absolute", top: 10, left: 10 }}
-            onPress={handleBack}
-          >
-            <MaterialIcons name="arrow-back" size={28} color="white" />
-          </Pressable>
-          <Pressable
-            style={{ position: "absolute", top: 10, right: 10 }}
-            onPress={handleSave}
-          >
-            <MaterialIcons name="done" size={28} color="white" />
-          </Pressable>
-          <View style={{ width: 250, height: 500 }}>
-            <View></View>
-
-            <View style={{ alignItems: "center" }}>
-              <View style={{ marginTop: -100, padding: 10 }}>
-                <ImagePickerExample />
-              </View>
-              <Heading>
-                {/* imagee */}
-                <View></View>
-                <Text style={{ color: "white", alignItems: "center" }}>
-                  Edit profile
-                </Text>
-                <View justifyContent="center"></View>
-              </Heading>
-
-              <Box style={{ width: "100%", paddingHorizontal: 20 }}>
+    <NativeBaseProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={{ flex: 1 }}>
+            <View style={{ backgroundColor: "black", flex: 1 }}>
+              <Box flex={1} paddingHorizontal={20} justifyContent="center">
                 <VStack space={4} alignItems="center">
-                  <View style={{ width: 380 }}>
-                    <FormControl.Label>Name</FormControl.Label>
-                    <Input variant="underlined" />
-                  </View>
+                  <FormControl.Label>Username</FormControl.Label>
+                  <Input
+                    variant="underlined"
+                    color={"white"}
+                    onChangeText={(text) => setUsername(text)}
+                  />
 
-                  <View style={{ width: 380 }}>
-                    <FormControl.Label>Username</FormControl.Label>
-                    <Input variant="underlined" />
-                  </View>
-
-                  <View style={{ width: 380 }}>
-                    <FormControl.Label>Password</FormControl.Label>
-                    <Input variant="underlined" />
-                  </View>
-                  <View style={{ width: 380 }}>
-                    <FormControl.Label>New Password</FormControl.Label>
-                    <Input variant="underlined" />
-                  </View>
+                  <FormControl.Label>Phone Number</FormControl.Label>
+                  <Input
+                    variant="underlined"
+                    color={"white"}
+                    fontSize={"md"}
+                    onChangeText={(text) => setNewPhone(text)}
+                  />
                 </VStack>
               </Box>
             </View>
+
+            <View
+              style={{
+                position: "absolute",
+                top: 50,
+                left: 10,
+                zIndex: 1,
+              }}
+            >
+              <MaterialIcons
+                name="arrow-back"
+                size={28}
+                color="white"
+                onPress={handleBack}
+              />
+            </View>
+
+            <View
+              style={{
+                position: "absolute",
+                top: 50,
+                right: 10,
+                zIndex: 1,
+              }}
+            >
+              <MaterialIcons
+                name="done"
+                size={28}
+                color="white"
+                onPress={handleSave}
+              />
+            </View>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </SafeAreaView>
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
+
+      <Modal
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        _backdrop={{
+          _dark: {
+            bg: "coolGray.800",
+          },
+          bg: "warmGray.50",
+        }}
+      >
+        <Modal.Content maxWidth="350" maxH="212" backgroundColor={"gray.100"}>
+          <Modal.CloseButton />
+          <Modal.Header color={"black"}>Password</Modal.Header>
+          <Modal.Body color={"gray.100"}>
+            <Input
+              placeholder="password"
+              color={"white"}
+              onChangeText={(text) => setPasswordValid(text)}
+            ></Input>
+          </Modal.Body>
+
+          <Button.Group space={2}>
+            <Button
+              variant="ghost"
+              colorScheme="orange"
+              onPress={handleCloseModal}
+            >
+              Cancel
+            </Button>
+            <Button
+              color={"orange"}
+              style={{ size: 12 }}
+              onPress={handleCloseModal}
+            >
+              Save
+            </Button>
+          </Button.Group>
+        </Modal.Content>
+      </Modal>
+    </NativeBaseProvider>
   );
 };
 

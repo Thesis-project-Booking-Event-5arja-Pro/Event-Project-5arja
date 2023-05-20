@@ -1,61 +1,114 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import React from 'react'
-import { Octicons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TextInput, Dimensions, Pressable , TouchableOpacity} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { FontAwesome } from '@expo/vector-icons';
+import axios from "axios";
+import { useNavigation } from '@react-navigation/native'
+const { width } = Dimensions.get('window');
+
+const EventList = () => {
+  const [events, setEvents] = useState([]);
+  const [search, setSearch] = useState('');
+  const navigation = useNavigation();
+  useEffect(() => {
+    axios.get('http://192.168.104.3:5000/api/event/getAllevent')
+      .then((response) => {
+        setEvents(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  const handleNav = (event) => {
+    navigation.navigate('ticket', { item: event });
+  };
 
 
-
-const DATA = [
-    { id: '1', title: 'https://themusicessentials.com/wp-content/uploads/2016/11/unnamed-2-15-696x464.jpg', name: "tale of us1", date: "5/02/20225", lineup: "argey,daniel", localstion: "mexuioscjc", desc: "ras tnbirs" },
-    { id: '2', title: 'https://themusicessentials.com/wp-content/uploads/2016/11/unnamed-2-15-696x464.jpg', name: "tale of us2", date: "5/02/20225", lineup: "argey,daniel", localstion: "mexuioscjc", desc: "ras tnbirs" },
-    { id: '3', title: 'https://themusicessentials.com/wp-content/uploads/2016/11/unnamed-2-15-696x464.jpg', name: "tale of us3", date: "5/02/20225", lineup: "argey,daniel", localstion: "mexuioscjc", desc: "ras tnbirs" },
-    { id: '4', title: 'https://themusicessentials.com/wp-content/uploads/2016/11/unnamed-2-15-696x464.jpg', name: "tale of us4", date: "5/02/20225", lineup: "argey,daniel", localstion: "mexuioscjc", desc: "ras tnbirs" },
-];
-
-const Seeallticket = () => {
-    return (
-        <View style={{ backgroundColor: "black" }}>
-            <Pressable
-                style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    paddingHorizontal: 20,
-                    marginTop: 30,
-                    padding: 12,
-                    backgroundColor: "black",
-                }}
-            >
-                <Pressable
-                    onPress={() => setModalVisibile(!modalVisibile)}
-                    style={{ flexDirection: "row", alignItems: "center" }}
-                >
-                    <Octicons name="arrow-switch" size={22} color="gray" />
-                    <Text style={{ fontSize: 15, fontWeight: "500", marginLeft: 8, color: "white" }}>
-                        sort
-                    </Text>
-                </Pressable>
-
-                <Pressable style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Ionicons name="filter" size={22} color="gray" />
-                    <Text style={{ fontSize: 15, fontWeight: "500", marginLeft: 8, color: "white" }}>
-                        Filter
-                    </Text>
-                </Pressable>
-
-                <Pressable onPress={() => navigation.navigate("Map", {
-                    searchResults: searchPlaces,
-                })} style={{ flexDirection: "row", alignItems: "center" }}>
-                    <FontAwesome5 name="map-marker-alt" size={22} color="gray" />
-                    <Text style={{ fontSize: 15, fontWeight: "500", marginLeft: 8, color: "white" }}>
-                        Map
-                    </Text>
-                </Pressable>
-            </Pressable>
-
-
-        </View>)
+  return (
+    <View style={styles.container}>
+      <View style={styles.searchContainer}>
+        <FontAwesome name="search" size={25} color="orange" />
+        <TextInput
+          style={styles.search}
+          value={search}
+          onChangeText={setSearch}
+          placeholder="Search Events"
+        />
+        <Text style={styles.searchButton} onPress={() => console.log('Search pressed')}>Search</Text>
+      </View>
+      <ScrollView>
+        {events.filter(event => event.eventName.toLowerCase().includes(search.toLowerCase())).map((event) => (
+          <View key={event.id} style={styles.event}>
+        <TouchableOpacity onPress={() => handleNav(event)} activeOpacity={0.6}>
+  <Image source={{ uri: event.img }} style={styles.image} />
+</TouchableOpacity>
+            <Text style={styles.title}>{event.eventName}</Text>
+            <Text style={styles.date}>{event.start_time}</Text>
+         
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  );
 }
 
-export default Seeallticket
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#1A1A1A',
+    padding: 10,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
+  search: {
+    flex: 1,
+    height: 50,
+    borderWidth: 2,
+    borderColor: 'orange',
+    paddingLeft: 10,
+    color: '#FFFFFF',
+    fontSize: 18,
+    borderRadius: 8,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  searchButton: {
+    backgroundColor: 'orange',
+    padding: 15,
+    borderRadius: 8,
+    color: '#1A1A1A',
+    fontSize: 12,
+  },
+  image: {
+    width: width - 20,
+    height: 200,
+    borderRadius: 10,
+    marginTop: 20,
+  },
+  title: {
+    fontSize: 18,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    marginTop: 10,
+    backgroundColor: '#1A1A1A',
+    padding: 10,
+    borderRadius: 10,
+    textAlign: 'center',
+  },
+  date: {
+    fontSize: 14,
+    color: '#FFFFFF',
+    marginTop: 12,
+    backgroundColor: 'grey',
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity:1,
+    shadowRadius: 15,
+    
+    textAlign: 'center',
+  },
+});
+
+export default EventList;
