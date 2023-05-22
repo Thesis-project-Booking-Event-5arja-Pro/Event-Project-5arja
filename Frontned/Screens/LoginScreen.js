@@ -7,27 +7,14 @@ import {
   TextInput,
   Pressable,
   ActivityIndicator,
-  TouchableWithoutFeedback,
-  Keyboard,
   Alert,
-  Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  Box,
-  VStack,
-  FormControl,
-  Input,
-  Button,
-  Modal,
-  NativeBaseProvider,
-} from "native-base";
 import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+
 import { Video, ResizeMode } from "expo-av";
 import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
@@ -49,40 +36,34 @@ const LoginScreen = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleBack = () => {
-    navigation.navigate("main");
+    navigation.goBack;
   };
 
   const Login = () => {
+    
     axios
-      .post(`http://${URL}:5000/api/client/singin`, {
+      .post(`http://${URL}:5000/api/user/singin`, {
         email: email.trim(),
         password: password,
       })
       .then((res) => {
+        
         const token = res.data;
         const infoDisplay = res.data.user;
         const ImgUser = infoDisplay.img;
         AsyncStorage.setItem("token", token.token);
         updateUser(infoDisplay, token.token, ImgUser);
-<<<<<<< HEAD
-        navigation.navigate('main')
-=======
->>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
+        navigation.navigate("main");
       })
       .catch((err) => {
         console.log(err);
         Alert.alert("Error", "check your email or password");
       });
   };
-<<<<<<< HEAD
+  console.log(token);
   const handleForgetPassword = () => {
-    navigation.navigate('forget')
-  }
-=======
-const handleForgetPassword=()=>{
-  navigation.navigate('forget')
-}
->>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
+    navigation.navigate("forget");
+  };
   return (
     <SafeAreaView
       style={{
@@ -90,7 +71,7 @@ const handleForgetPassword=()=>{
         backgroundColor: "black",
         alignItems: "center",
         padding: 10,
-        marginTop: -13,
+        marginTop: -20,
         marginLeft: -4,
       }}
     >
@@ -105,7 +86,7 @@ const handleForgetPassword=()=>{
         <View style={{}}>
           <Video
             source={require("../unit/txt.mp4")}
-            style={{ height: 300, width: 300 , marginLeft:30 }}
+            style={{ height: 300, width: 300 }}
             resizeMode="cover"
             shouldPlay
           />
@@ -199,7 +180,7 @@ const handleForgetPassword=()=>{
               </View>
               <View>
                 <Pressable onPress={() => handleForgetPassword()}>
-                  <Text style={{ color: "red", marginLeft: 235, fontSize: 9 }}>
+                  <Text style={{ color: "red", marginLeft: 223, fontSize: 15 }}>
                     Forget Password?
                   </Text>
                 </Pressable>
@@ -217,6 +198,7 @@ const handleForgetPassword=()=>{
                 <Pressable
                   onPress={Login}
                   style={{
+                    marginLeft: 35,
                     width: 150,
                     backgroundColor: "orange",
                     padding: 15,
@@ -263,3 +245,25 @@ const handleForgetPassword=()=>{
 export default LoginScreen;
 
 const styles = StyleSheet.create({});
+// useEffect(() => {
+//   setLoading(false);
+//   const unsubscribe = auth.onAuthStateChanged((authUser) => {
+//     console.log(authUser);
+//     if (!authUser) {
+//       setLoading(false);
+//     }
+//     if (authUser) {
+//       updateUser(userData, myUserUid)
+//       navigation.navigate("Home");
+//     }
+//   });
+
+//   return unsubscribe;
+// }, []);
+
+// const login = () => {
+//   signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+//     const user = userCredential.user;
+//     console.log("user details", user);
+//   });
+// };

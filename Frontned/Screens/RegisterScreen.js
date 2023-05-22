@@ -27,7 +27,7 @@ import { AuthContext, AuthProvider } from "./AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import URL from "../api/client";
 import axios from "axios";
-import ImagePickerExample from "../components/ImagePicker";
+
 
 const RegisterScreen = () => {
   const [userName, setuserName] = useState("");
@@ -40,16 +40,16 @@ const RegisterScreen = () => {
   const { updateUser } = useContext(AuthContext);
   const { profileIMG } = useContext(AuthContext);
   const register = () => {
-   
     const info = {
-      firstName: userName,
+      username: userName,
       email: email.trim(),
       password: password,
-      phoneNumber: phone,
+      name:userName,
+      phone_number: phone,
       img: profileIMG,
     };
     axios
-      .post(`http://${URL}:5000/api/client/addclient`, info)
+      .post(`http://${URL}:5000/api/user/addUser`, info)
       .then((res) => {
         console.log("hi im clinet posed" + res);
         AsyncStorage.setItem("token", res.data);
@@ -79,11 +79,7 @@ const RegisterScreen = () => {
               <View style={{}}>
                 <Video
                   source={require("../unit/txt.mp4")}
-<<<<<<< HEAD
-                  style={{ height: 300, width: 300 , marginLeft:30  }}
-=======
                   style={{ height: 300, width: 300 }}
->>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
                   resizeMode="cover"
                   shouldPlay
                 />
@@ -263,3 +259,41 @@ const RegisterScreen = () => {
 };
 
 export default RegisterScreen;
+
+const styles = StyleSheet.create({});
+// const register = () => {
+//   if (email === "" || password === "" || phone === "") {
+//     Alert.alert(
+//       "Invalid Details",
+//       "Please fill all the details",
+//       [
+//         {
+//           text: "Cancel",
+//           onPress: () => console.log("Cancel Pressed"),
+//           style: "cancel",
+//         },
+//         { text: "OK", onPress: () => console.log("OK Pressed") },
+//       ],
+//       { cancelable: false }
+//     );
+//   }
+//   createUserWithEmailAndPassword(auth, email, password)
+//     .then((userCredential) => {
+//       const userData = {
+//         name: userName,
+//         email: email,
+//         password: password,
+//         phone: phone,
+//       };
+//       const user = userCredential._tokenResponse.email;
+//       const myUserUid = auth.currentUser.uid;
+
+//       setDoc(doc(db, "users", `${myUserUid}`), userData);
+//       tokenUser(myUserUid);
+//       updateUser(userData, myUserUid);
+//       console.log("user registre");
+//     })
+//     .catch((err) => {
+//       Alert.alert("Error" + err);
+//     });
+// };

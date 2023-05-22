@@ -15,17 +15,13 @@ import RegisterScreen from "./Screens/RegisterScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import Setting from "./Screens/Setting";
 import Help from "./Screens/Help";
-<<<<<<< HEAD
 import Screenpayment from "./Screens/Scrennpayment.js"
 import { AuthContext } from "./Screens/AuthContext";
 import ForgetPassword from "./Screens/ForgetPassword";
 import Qrpurche from "./Screens/Qrpurche.js"
-=======
+import Liked from "./Screens/Liked";
 
-import { AuthContext } from "./Screens/AuthContext";
-import ForgetPassword from "./Screens/ForgetPassword";
 
->>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
@@ -94,9 +90,27 @@ const StackNavigator = () => {
             tabBarLabelStyle: { display: "none" }, // Hide the tab label
           }}
         />
+             <Tab.Screen
+          name="TicketScreen"
+          component={TicketScreen}
+          options={{
+            headerShown: false,
+            tabBarButton: () => null, // Hide the tab button
+            tabBarLabelStyle: { display: "none" }, // Hide the tab label
+          }}
+        />
         <Tab.Screen
-          name="ticket"
-          component={token ? TicketScreen : LoginScreen}
+          name="liked"
+          component={Liked}
+          options={{
+            headerShown: false,
+            tabBarButton: () => null, // Hide the tab button
+            tabBarLabelStyle: { display: "none" }, // Hide the tab label
+          }}
+        />
+        <Tab.Screen
+          name="yourticket"
+          component={ LoginScreen}
           options={{
             tabBarLabel: "ticket",
             headerShown: false,

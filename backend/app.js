@@ -5,9 +5,8 @@ const eventplanerRoute = require("./routes/admin");
 const clientRoute = require("./routes/client");
 const commentsRoute = require("./routes/comments");
 const postRoute = require("./routes/post");
-const feedbackRoute = require("./routes/feed back");
-const ticketRoute = require("./routes/ticket");
-const event_attendanceRoute = require("./routes/event_attendance");
+const likesRoute = require("./routes/likes");
+const bookingRoute = require("./routes/booking");
 const imageUploadRoute = require("./routes/uploadImage"); // Add this line
 const cors = require("cors");
 
@@ -26,19 +25,19 @@ admin.initializeApp({
 app.use(cors({ origin: "http://192.168.1.13:5000 ", credentials: true }));
 app.use(express.json({ limit: "200mb" }));
 app.use(express.urlencoded({ extended: true, limit: "200mb" }));
-app.use("/api/event_attendance", event_attendanceRoute);
 app.use("/api/event", eventRoute);
+app.use("/api/user", clientRoute);
+app.use("/api/likes", likesRoute);
+app.use("/api/booking", bookingRoute);
 app.use("/api/eventplaner", eventplanerRoute);
-app.use("/api/client", clientRoute);
+
 app.use("/api/comments", commentsRoute);
 app.use("/api/post", postRoute);
-app.use("/api/feedback", feedbackRoute);
-app.use("/api/ticket", ticketRoute);
+
 app.use("/api/image-upload", imageUploadRoute);
 
 
-<<<<<<< HEAD
+
 module.exports = app;
-=======
-module.exports = app;
->>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
+
+

@@ -6,12 +6,12 @@ const { getAllClients, addClient, getOneClient , deleteOneClient,signIn,updateCl
 
 
 
-router.get('/getAllclient', getAllClients);
+router.get('/getAllUser', getAllClients);
 router.get('/:id', getOneClient);
-router.post('/addclient', addClient);
+router.post('/addUser', addClient);
 router.post('/singin', signIn);
 router.delete('/:id', deleteOneClient)
-router.put('/updateclient', updateClient);
+router.put('/updateUser', updateClient);
 router.post('/resetpassword', resetPassword)
 
 module.exports = router;

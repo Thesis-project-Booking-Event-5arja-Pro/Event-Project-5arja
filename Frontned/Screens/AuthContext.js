@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AuthContext = createContext();
 
@@ -7,10 +8,24 @@ const AuthProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [profileIMG, setProfileIMG] = useState(null);
   const [emailAuth, setEmailAuth] = useState("");
+
   const updateUser = (userData, token, image) => {
     setUser(userData);
     setToken(token);
     setProfileIMG(image);
+  };
+
+  const signOut = async () => {
+    try {
+      // Clear the user token and other relevant state
+      await AsyncStorage.removeItem("userToken");
+      setUser("");
+      setToken("");
+      setProfileIMG(null);
+      setEmailAuth("");
+    } catch (error) {
+      console.log("Error signing out:", error);
+    }
   };
 
   return (
@@ -21,7 +36,9 @@ const AuthProvider = ({ children }) => {
         updateUser,
         profileIMG,
         setProfileIMG,
+        emailAuth,
         setEmailAuth,
+        signOut,
       }}
     >
       {children}

@@ -40,7 +40,7 @@ const Nearyou = ({ latitude, longitude }) => {
   return (
     <View style={{}}>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-        <Text style={{ color: "white", fontSize: 22, fontWeight: 'bold', marginRight: 280, marginTop:15 }}>Near you</Text>
+        <Text style={{ color: "white", fontSize: 22, fontWeight: 'bold', marginRight: 290, marginTop:15 }}>Nearest</Text>
         <AntDesign name="rightcircleo" size={24} color="white" style={{ marginTop: 20 }} />
       </View>
       <FlatList

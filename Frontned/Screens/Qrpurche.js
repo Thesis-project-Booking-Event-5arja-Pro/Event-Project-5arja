@@ -25,7 +25,7 @@ const Qrpurche = ({ route }) => {
       Alert.alert('Error capturing screenshot.');
     }
   };
-console.log(event);
+
   return (
     <View style={styles.container}  ref={ref}>
       <ImageBackground

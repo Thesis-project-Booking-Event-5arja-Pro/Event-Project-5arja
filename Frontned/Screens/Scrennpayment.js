@@ -1,37 +1,54 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, ImageBackground, ActivityIndicator } from "react-native";
+import React, { useContext, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ImageBackground,
+  ActivityIndicator,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Frames, CardNumber, ExpiryDate, Cvv, SubmitButton } from "frames-react-native";
-import { Video, ResizeMode } from 'expo-av';
-
+import {
+  Frames,
+  CardNumber,
+  ExpiryDate,
+  Cvv,
+  SubmitButton,
+} from "frames-react-native";
+import { Video, ResizeMode } from "expo-av";
+import axios from "axios";
+import URL from "../api/client";
+import { AuthContext } from "./AuthContext";
 export default function Scrennpayment({ route }) {
   const { infopurche } = route.params;
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
+  const [ticket, setTicket] = useState([]);
+  const { user } = useContext(AuthContext);
+
+console.log(user);
+
+  const handlTicktBuy = () => {
+    axios.post(`http://${URL}:5000/api/booking/addbooking`, { user_id });
+  };
 
   return (
     <View style={styles.container}>
       {loading ? (
         <View>
-         <Video
+          <Video
+            source={require("../unit/waitticket.mp4")}
+            style={{ height: 350, width: 350 }}
+            resizeMode="cover"
+            shouldPlay
+          />
 
-
-         source={require('../unit/waitticket.mp4')}
-         style={{ height: 350, width: 350 }}
-
-         resizeMode="cover"
-         shouldPlay
-
-
-
-     />
-      
-        <ActivityIndicator size="large" color="#FFFFFF" />
+          <ActivityIndicator size="large" color="#FFFFFF" />
         </View>
       ) : (
-        
         <>
-          <Text style={{ color: "white", fontSize: 25, marginBottom: 50 }}>Get your Ticket Now</Text>
+          <Text style={{ color: "white", fontSize: 25, marginBottom: 50 }}>
+            Get your Ticket Now
+          </Text>
           <View style={styles.paymentInfoContainer}>
             <View style={styles.eventInfoContainer}>
               <ImageBackground
@@ -41,10 +58,18 @@ export default function Scrennpayment({ route }) {
                 borderRadius={5}
               />
               <View style={styles.eventDetails}>
-                <Text style={styles.eventDate}>Event Date: {infopurche.start_time}</Text>
-                <Text style={styles.eventPrice}>Event Price: {infopurche.price} DT</Text>
-                <Text style={styles.eventName}>Event name: {infopurche.eventName}</Text>
-                <Text style={styles.eventName}>Event localisation: {infopurche.location}</Text>
+                <Text style={styles.eventDate}>
+                  Event Date: {infopurche.start_time}
+                </Text>
+                <Text style={styles.eventPrice}>
+                  Event Price: {infopurche.price} DT
+                </Text>
+                <Text style={styles.eventName}>
+                  Event name: {infopurche.eventName}
+                </Text>
+                <Text style={styles.eventName}>
+                  Event localisation: {infopurche.location}
+                </Text>
               </View>
             </View>
           </View>
@@ -55,16 +80,12 @@ export default function Scrennpayment({ route }) {
               publicKey: "pk_test_4296fd52-efba-4a38-b6ce-cf0d93639d8a",
             }}
             cardTokenized={() => {
-              setLoading(true); 
-
-              
-           
-              
+              setLoading(true);
 
               setTimeout(() => {
                 setLoading(false);
-                navigation.navigate("qr",{event:infopurche});
-              }, 5000)
+                navigation.navigate("qr", { event: infopurche });
+              }, 5000);
             }}
           >
             <CardNumber
@@ -73,7 +94,10 @@ export default function Scrennpayment({ route }) {
             />
 
             <View style={styles.dateAndCode}>
-              <ExpiryDate style={styles.expiryDate} placeholderTextColor="#9898A0" />
+              <ExpiryDate
+                style={styles.expiryDate}
+                placeholderTextColor="#9898A0"
+              />
               <Cvv style={styles.cvv} placeholderTextColor="#9898A0" />
             </View>
 
@@ -81,10 +105,7 @@ export default function Scrennpayment({ route }) {
               title="Pay Now"
               style={styles.button}
               textStyle={styles.buttonText}
-              onPress={() => {
-               
-              
-              }}
+              onPress={() => {}}
             />
           </Frames>
         </>
@@ -120,63 +141,61 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   eventDetails: {
-  flex: 1,
+    flex: 1,
   },
   eventDate: {
-  color: "white",
-  fontSize: 18,
-  marginBottom: 5,
+    color: "white",
+    fontSize: 18,
+    marginBottom: 5,
   },
   eventPrice: {
-  color: "white",
-  fontSize: 18,
+    color: "white",
+    fontSize: 18,
   },
   eventName: {
-  color: "white",
-  fontSize: 18,
-  marginTop: 5,
+    color: "white",
+    fontSize: 18,
+    marginTop: 5,
   },
   dateAndCode: {
-  marginTop: 15,
-  flexDirection: "row",
-  justifyContent: "space-between",
+    marginTop: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   cardNumber: {
-  fontSize: 18,
-  height: 50,
-  color: "#FEFFFF",
-  backgroundColor: "#1B1C1E",
-  borderColor: "#3A4452",
-  borderRadius: 5,
-  borderWidth: 0,
+    fontSize: 18,
+    height: 50,
+    color: "#FEFFFF",
+    backgroundColor: "#1B1C1E",
+    borderColor: "#3A4452",
+    borderRadius: 5,
+    borderWidth: 0,
   },
   expiryDate: {
-  fontSize: 18,
-  height: 50,
-  width: "48%",
-  color: "#FEFFFF",
-  backgroundColor: "#1B1C1E",
-  borderWidth: 0,
+    fontSize: 18,
+    height: 50,
+    width: "48%",
+    color: "#FEFFFF",
+    backgroundColor: "#1B1C1E",
+    borderWidth: 0,
   },
   cvv: {
-  fontSize: 18,
-  height: 50,
-  width: "48%",
-  color: "#FEFFFF",
-  backgroundColor: "#1B1C1E",
-  borderWidth: 0,
+    fontSize: 18,
+    height: 50,
+    width: "48%",
+    color: "#FEFFFF",
+    backgroundColor: "#1B1C1E",
+    borderWidth: 0,
   },
   button: {
-  height: 50,
-  borderRadius: 5,
-  marginTop: 20,
-  justifyContent: "center",
-  backgroundColor: "#4285F4",
+    height: 50,
+    borderRadius: 5,
+    marginTop: 20,
+    justifyContent: "center",
+    backgroundColor: "#4285F4",
   },
   buttonText: {
-  color: "white",
-  fontSize: 16,
+    color: "white",
+    fontSize: 16,
   },
-  });
-  
-  
+});

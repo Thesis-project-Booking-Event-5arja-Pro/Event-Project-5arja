@@ -4,12 +4,11 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const validator = require("email-validator");
 const { google } = require("googleapis");
-<<<<<<< HEAD
-const AccessToken="ya29.a0AWY7CknCnPmczY6IskR20AkMeTXIzdOhMW1CFnKAHau4i0P0EbGv4oLX9eb5vGn_YL8IJJl5zHBiDlP0d5XAt9tU4qH_uk3myhselKlmnLaYysxqZVN2wexX4ZWOvStO6mtON-0b_oSrJs0yI29m0E7O33JTzbMaCgYKAa8SARASFQG1tDrp6yTaYDzn0evPRQi5wLPgcw0166"
-=======
-const AccessToken="ya29.a0AWY7CknJA7MAiH7qf573yoVkzdHE8zm75ElI1mWd0NjWKrapuwGL_baXPC7fFyM7MOYsXpzxMgO72hh5bUPd9U_Q03kwbo6VUjoAe3USmrBcbS_GQxz9bjK7TAgQnYmT4GdVB5HRpUJ4y670mUY3zjh6gSrRaCgYKAScSARASFQG1tDrpA4sgjalTUKBVrILCiD_Jtg0163"
->>>>>>> 249cb47a6129ebad3809846147c9b06e27568c3c
-const refreshToken="1//04VPp5gGdZbT_CgYIARAAGAQSNgF-L9IrCQUIGpqzss356QVLSScItBDdrpE7GAyqxL6_HQ89rxoPK9Qvn3WFNU0SS-R6OqXNtg"
+
+const AccessToken =
+  "ya29.a0AWY7CknCnPmczY6IskR20AkMeTXIzdOhMW1CFnKAHau4i0P0EbGv4oLX9eb5vGn_YL8IJJl5zHBiDlP0d5XAt9tU4qH_uk3myhselKlmnLaYysxqZVN2wexX4ZWOvStO6mtON-0b_oSrJs0yI29m0E7O33JTzbMaCgYKAa8SARASFQG1tDrp6yTaYDzn0evPRQi5wLPgcw0166";
+const refreshToken =
+  "1//04VPp5gGdZbT_CgYIARAAGAQSNgF-L9IrCQUIGpqzss356QVLSScItBDdrpE7GAyqxL6_HQ89rxoPK9Qvn3WFNU0SS-R6OqXNtg";
 module.exports = {
   getAllClients(req, res) {
     client.getAll((err, results) => {
@@ -31,7 +30,8 @@ module.exports = {
         console.log("Email is invalid.");
         res.status(400).send("nvalid email address");
         return;
-        }admin
+      }
+      admin
         .auth()
         .createUser({
           email: email,
@@ -39,16 +39,16 @@ module.exports = {
         })
         .then((userRecord) => {
           const clientInfo = {
-            firstName: req.body.firstName,
+            username: req.body.username,
             email: req.body.email,
             password: hashedPassword,
-            phoneNumber: req.body.phoneNumber,
+            phone_number: req.body.phone_number,
             img: req.body.img,
           };
-    
+
           const temporaryPassword = generateTemporaryPassword();
           sendPasswordResetEmail(email, temporaryPassword);
-    
+
           client.add((error, results) => {
             if (error) {
               console.error("Error adding client:", error);
@@ -72,7 +72,7 @@ module.exports = {
           console.error("Error registering:", error);
           res.status(500).send("Error registering user");
         });
-    })
+    });
   },
   signIn(req, res) {
     const { email, password } = req.body;
@@ -179,7 +179,7 @@ module.exports = {
   },
 
   updateClient(req, res) {
-    const { password, email, firstName, phoneNumber } = req.body;
+    const { password, email, username, phone_number } = req.body;
 
     client.getOneClientByEmail(email, (error, user) => {
       if (error) {
@@ -200,7 +200,7 @@ module.exports = {
         } else if (!result) {
           res.status(401).send("Incorrect password");
         } else {
-          client.updateOne(email, firstName, phoneNumber, (err, results) => {
+          client.updateOne(email, username, phone_number, (err, results) => {
             if (err) {
               console.error("Error updating client:", err);
               res.status(500).send("Error updating client");
@@ -221,18 +221,17 @@ async function sendPasswordResetEmail(email, temporaryPassword) {
       "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",
       "https://mail.google.com"
     );
-    
-
     oauth2Client.setCredentials({
       refresh_token: refreshToken,
     });
-    
-const transporter = nodemailer.createTransport({
+
+    const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
         type: "OAuth2",
         user: "kharja666@gmail.com",
-        clientId: "597493550999-s1ibkpjismj67uvmh6oupto9602rgn2t.apps.googleusercontent.com",
+        clientId:
+          "597493550999-s1ibkpjismj67uvmh6oupto9602rgn2t.apps.googleusercontent.com",
         clientSecret: "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",
         refreshToken: refreshToken,
         accessToken: AccessToken,
@@ -252,7 +251,6 @@ const transporter = nodemailer.createTransport({
     console.error("Error sending password reset email:", error);
   }
 }
-
 
 function generateTemporaryPassword() {
   const length = 8;

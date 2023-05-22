@@ -8,7 +8,6 @@ import {
   Pressable,
 } from "react-native";
 import React from "react";
-import ImagePickerExample from "../components/ImagePicker";
 import tailwind from "twrnc";
 
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
