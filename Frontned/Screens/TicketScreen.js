@@ -288,6 +288,7 @@ const TicketScreen = ({ route }) => {
           style={{
             backgroundColor: "grey",
             borderRadius: 5,
+            marginTop:35,
             padding: 40,
           }}
           onPress={handlepurcheticket}

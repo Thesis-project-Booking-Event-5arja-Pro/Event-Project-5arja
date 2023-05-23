@@ -19,7 +19,7 @@ import Screenpayment from "./Screens/Scrennpayment.js"
 import { AuthContext } from "./Screens/AuthContext";
 import ForgetPassword from "./Screens/ForgetPassword";
 import Qrpurche from "./Screens/Qrpurche.js"
-import Liked from "./Screens/Liked";
+import MyTickets from "./Screens/MyTickets";
 
 
 const StackNavigator = () => {
@@ -90,27 +90,9 @@ const StackNavigator = () => {
             tabBarLabelStyle: { display: "none" }, // Hide the tab label
           }}
         />
-             <Tab.Screen
-          name="TicketScreen"
-          component={TicketScreen}
-          options={{
-            headerShown: false,
-            tabBarButton: () => null, // Hide the tab button
-            tabBarLabelStyle: { display: "none" }, // Hide the tab label
-          }}
-        />
         <Tab.Screen
-          name="liked"
-          component={Liked}
-          options={{
-            headerShown: false,
-            tabBarButton: () => null, // Hide the tab button
-            tabBarLabelStyle: { display: "none" }, // Hide the tab label
-          }}
-        />
-        <Tab.Screen
-          name="yourticket"
-          component={ LoginScreen}
+          name="ticket"
+          component={token ? MyTickets : LoginScreen}
           options={{
             tabBarLabel: "ticket",
             headerShown: false,
@@ -186,7 +168,7 @@ const StackNavigator = () => {
         />
 
         <Stack.Screen
-          name="tikcet"
+          name="TicketScreen"
           component={TicketScreen}
           options={{ headerShown: false }}
         />

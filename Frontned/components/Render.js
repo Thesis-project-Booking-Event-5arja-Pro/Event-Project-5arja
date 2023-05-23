@@ -53,6 +53,7 @@ const Render = ({ data }) => {
         </View>
       </View>
     </TouchableOpacity>
+   
   );
 
   return (

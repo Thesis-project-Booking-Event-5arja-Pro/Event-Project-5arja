@@ -36,6 +36,8 @@
     "expo-location": "~15.1.1",
     "expo-media-library": "^15.2.3",
     "expo-permissions": "^14.1.1",
+    "expo-print": "^12.2.1",
+    "expo-sharing": "^11.2.2",
     "expo-status-bar": "~1.4.4",
     "expo-web-browser": "~12.1.1",
     "firebase": "^9.21.0",

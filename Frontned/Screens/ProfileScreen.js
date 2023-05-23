@@ -109,6 +109,7 @@ export default function ProfileScreen() {
           },
         }
       );
+      
       handleSave(uri);
       setProfileIMG(uri);
       setImage(response.data);

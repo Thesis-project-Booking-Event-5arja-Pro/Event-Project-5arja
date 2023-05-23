@@ -67,7 +67,7 @@ const Liked = ({ route }) => {
         )}
       </View>
     </ScrollView>
-  );
+  )
 };
 
 export default Liked;
