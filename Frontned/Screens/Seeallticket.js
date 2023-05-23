@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { FontAwesome } from '@expo/vector-icons';
 import axios from "axios";
 import { useNavigation } from '@react-navigation/native'
+import URL from '../api/client';
 const { width } = Dimensions.get('window');
 
 const EventList = () => {
@@ -11,7 +12,7 @@ const EventList = () => {
   const [search, setSearch] = useState('');
   const navigation = useNavigation();
   useEffect(() => {
-    axios.get('http://192.168.104.3:5000/api/event/getAllevent')
+    axios.get(`http://${URL}:5000/api/event/getAllevent`)
       .then((response) => {
         setEvents(response.data);
       })

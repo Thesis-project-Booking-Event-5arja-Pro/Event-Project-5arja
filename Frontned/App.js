@@ -22,8 +22,6 @@ export default function App() {
           </TouchableWithoutFeedback>
         </AuthProvider>
       </NativeBaseProvider>
-
-      {/* <Drawers /> */}
     </>
   );
 }

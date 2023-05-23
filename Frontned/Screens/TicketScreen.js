@@ -29,7 +29,7 @@ const TicketScreen = ({ route }) => {
   console.log(route, "==>");
 
   const { item } = route.params;
-  console.log(item);
+
 
   const navigation = useNavigation();
   const startTime = item.start_time.slice(11, 16);
@@ -57,7 +57,9 @@ const TicketScreen = ({ route }) => {
       user_id:user.user_id,
      event_id:item.event_id
     }
-axios.post(`http://${URL}:5000/api/likes/addLike`,data).then((res)=>{console.log(res.data);}).catch((err)=>{console.log(err)})
+axios.post(`http://${URL}:5000/api/likes/addLike`,data).then((res)=>{
+  console.log('azea')
+}).catch((err)=>{console.log(err)})
     setHeart(!heart);
   };
 
@@ -258,6 +260,7 @@ axios.post(`http://${URL}:5000/api/likes/addLike`,data).then((res)=>{console.log
           style={{
             backgroundColor: "grey",
             borderRadius: 5,
+            marginTop:35,
             padding: 40,
           }}
           onPress={handlepurcheticket}

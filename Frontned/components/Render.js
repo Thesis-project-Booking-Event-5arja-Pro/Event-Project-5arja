@@ -23,8 +23,8 @@ const Render = ({ data }) => {
     return date.toLocaleDateString(undefined, options);
   };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handleImagePress(item)} activeOpacity={0.6}>
+  const renderItem = ({ item }) => (<>
+   {item && <TouchableOpacity onPress={() => handleImagePress(item)} activeOpacity={0.6}>
       <View>
         <ImageBackground source={{ uri: item.img }} borderRadius={20} resizeMode='cover' style={{ width: 330, height: 380, marginTop: 20, marginLeft: 20 }} />
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: 20, marginTop: -80 }}>
@@ -34,7 +34,8 @@ const Render = ({ data }) => {
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </TouchableOpacity>}
+    </>
   );
 
   return (

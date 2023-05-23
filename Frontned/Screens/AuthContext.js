@@ -8,7 +8,7 @@ const AuthProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [profileIMG, setProfileIMG] = useState(null);
   const [emailAuth, setEmailAuth] = useState("");
-
+  const [Qr, setQR] = useState("");
   const updateUser = (userData, token, image) => {
     setUser(userData);
     setToken(token);
@@ -23,6 +23,8 @@ const AuthProvider = ({ children }) => {
       setToken("");
       setProfileIMG(null);
       setEmailAuth("");
+      
+      
     } catch (error) {
       console.log("Error signing out:", error);
     }
@@ -39,6 +41,8 @@ const AuthProvider = ({ children }) => {
         emailAuth,
         setEmailAuth,
         signOut,
+        setQR,
+        Qr,
       }}
     >
       {children}

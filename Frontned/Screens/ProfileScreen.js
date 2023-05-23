@@ -36,6 +36,7 @@ export default function ProfileScreen() {
   const windowWidth = Dimensions.get("window").width;
   const { signOut } = useContext(AuthContext);
 
+
   const handleLogout = async () => {
     try {
       await signOut();
@@ -105,6 +106,7 @@ export default function ProfileScreen() {
           },
         }
       );
+      
       handleSave(uri);
       setProfileIMG(uri);
       setImage(response.data);
@@ -193,7 +195,7 @@ const handleFavoUser=()=>{
         <Pressable style={tailwind`flex-row gap-2 px-8 mr-63 mt-20`} onPress={handleFavoUser}>
           {/* setting help */}
           <Entypo name="ticket" size={24} color="white" />
-          <Text style={tailwind`text-white text-lg `}>event's</Text>
+          <Text style={tailwind`text-white text-lg `}>Ticket</Text>
         </Pressable>
         <Pressable style={tailwind`flex-row  gap-2 px-8 mr-66 p-5`}>
           <Ionicons name="help-buoy-outline" size={24} color="#fff" />

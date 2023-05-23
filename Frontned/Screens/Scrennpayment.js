@@ -19,17 +19,27 @@ import axios from "axios";
 import URL from "../api/client";
 import { AuthContext } from "./AuthContext";
 export default function Scrennpayment({ route }) {
+  
   const { infopurche } = route.params;
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [ticket, setTicket] = useState([]);
   const { user } = useContext(AuthContext);
 
-console.log(user);
-
+console.log("infopur"+infopurche.event_id);
+const userB={
+  user_id:user.user_id,
+  event_id:infopurche.event_id
+}
   const handlTicktBuy = () => {
-    axios.post(`http://${URL}:5000/api/booking/addbooking`, { user_id });
+    axios
+      .post(`http://${URL}:5000/api/booking/addbooking`, userB)
+      .then((res) => {
+       console.log(res)
+      })
+      .catch((err) => console.log(err));
   };
+ 
 
   return (
     <View style={styles.container}>
@@ -101,11 +111,11 @@ console.log(user);
               <Cvv style={styles.cvv} placeholderTextColor="#9898A0" />
             </View>
 
-            <SubmitButton
+            <SubmitButton 
               title="Pay Now"
               style={styles.button}
               textStyle={styles.buttonText}
-              onPress={() => {}}
+              onPress={() => {handlTicktBuy()}}
             />
           </Frames>
         </>

@@ -24,20 +24,21 @@ const Liked = () => {
 
   return (
     <ScrollView style={{ backgroundColor: "black", flex: 1 }}>
-      <View>
+   
+      <View >
         {likes.map((e, i) => (
-          <Card style={{ backgroundColor: "white",padding:5 }}>
-            <Card.Title />
+          <Card style={{ backgroundColor: "black",padding:15}}>
+            <Card.Title key={i} />
             <Card.Content>
-              <Text variant="titleLarge">{e.title}</Text>
-              <Text variant="bodyMedium">{e.description}</Text>
+              <Text variant="titleLarge" style={{color:"white"}}>{e.title}</Text>
+              <Text variant="bodyMedium" style={{color:"white"}}>{e.description}</Text>
             </Card.Content>
             <Card.Cover source={{ uri: e.img }} />
           </Card>
         ))}
       </View>
     </ScrollView>
-  );
+  )
 };
 
 export default Liked;

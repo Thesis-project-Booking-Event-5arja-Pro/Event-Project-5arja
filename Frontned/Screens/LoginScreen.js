@@ -14,7 +14,6 @@ import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
 import { Video, ResizeMode } from "expo-av";
 import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
@@ -29,28 +28,24 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(false);
-  const authContext = useContext(AuthContext);
   const { updateUser, user } = useContext(AuthContext);
-  const { setEmailAuth } = useContext(AuthContext);
   const { token } = useContext(AuthContext);
-  const [showModal, setShowModal] = useState(false);
-
+  const  {profileIMG}=useContext(AuthContext)
   const handleBack = () => {
     navigation.goBack;
   };
 
   const Login = () => {
-    
+    console.log("zaeazeza");
     axios
       .post(`http://${URL}:5000/api/user/singin`, {
         email: email.trim(),
         password: password,
       })
       .then((res) => {
-        
         const token = res.data;
         const infoDisplay = res.data.user;
-        const ImgUser = infoDisplay.img;
+        const ImgUser = profileIMG
         AsyncStorage.setItem("token", token.token);
         updateUser(infoDisplay, token.token, ImgUser);
         navigation.navigate("main");
@@ -60,7 +55,7 @@ const LoginScreen = () => {
         Alert.alert("Error", "check your email or password");
       });
   };
-  console.log(token);
+ console.log(profileIMG);
   const handleForgetPassword = () => {
     navigation.navigate("forget");
   };
@@ -196,7 +191,9 @@ const LoginScreen = () => {
                 }}
               >
                 <Pressable
-                  onPress={Login}
+                  onPress={() => {
+                    Login();
+                  }}
                   style={{
                     marginLeft: 35,
                     width: 150,
