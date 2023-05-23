@@ -20,7 +20,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     axios
-      .get(`http://${URL}:5000/api/event/getallevent`)
+      .get(`http://${URL}:5001/api/event/getallevent`)
       .then((res) => {
         setdata(res.data); // Access the 'data' property of the response object
       })
@@ -67,11 +67,9 @@ const HomeScreen = () => {
       <Header />
       <Render data={dataevent} />
       <Soon data={dataevent} />
-      <Nearyou
-        latitude={location?.coords?.latitude}
-        longitude={location?.coords?.longitude}
-        data={dataevent}
-      />
+      <Nearyou latitude={location?.coords?.latitude} longitude={location?.coords?.longitude} data={dataevent} />
+
+
     </ScrollView>
   );
 };

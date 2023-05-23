@@ -8,6 +8,6 @@ const { getAlliked, addliked, getOneliked , deleteOneliked} = require('../contro
 router.get('/getAllLike', getAlliked);
 router.get('/:email', getOneliked);
 router.post('/addLike', addliked);
-router.delete('/:id', deleteOneliked)
+router.delete('/deletelike', deleteOneliked)
 
 module.exports = router;

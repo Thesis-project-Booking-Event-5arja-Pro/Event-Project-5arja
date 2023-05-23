@@ -15,7 +15,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { Calendar } from "react-native-calendars";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { Marker } from "react-native-maps";
-
 import { Fontisto } from "@expo/vector-icons";
 import { AuthContext } from "./AuthContext";
 import axios from "axios";
@@ -25,11 +24,11 @@ const TicketScreen = ({ route }) => {
   const [heart, setHeart] = useState(true);
   const [likes, setLikes] = useState([]);
   const { token } = useContext(AuthContext);
-  const {user}=useContext(AuthContext)
-  console.log(route, "==>");
+  const { user } = useContext(AuthContext)
+
 
   const { item } = route.params;
-  console.log(item);
+
 
   const navigation = useNavigation();
   const startTime = item.start_time.slice(11, 16);
@@ -53,13 +52,43 @@ const TicketScreen = ({ route }) => {
   };
 
   const handleliked = () => {
-    const data={
-      user_id:user.user_id,
-     event_id:item.event_id
+    if (heart) {
+      addlicked();
+    } else {
+    deletelicked()
     }
-axios.post(`http://${URL}:5000/api/likes/addLike`,data).then((res)=>{console.log(res.data);}).catch((err)=>{console.log(err)})
     setHeart(!heart);
+
+
   };
+
+ 
+  const addlicked = () => {
+    const data = {
+      user_id: user.user_id,
+      event_id: item.event_id
+    }
+    axios.post(`http://${URL}:5001/api/likes/addLike`, data).then((res) => { console.log(res.data); }).catch((err) => { console.log(err) })
+
+  }
+
+
+  const deletelicked = () => {
+    const data = {
+      user_id: user.user_id,
+      event_id: item.event_id
+    };
+  
+    axios
+      .delete(`http://${URL}:5001/api/likes/deletelike`, { data })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
   return (
     <View style={{ flex: 1, backgroundColor: "black" }}>
@@ -252,6 +281,7 @@ axios.post(`http://${URL}:5000/api/likes/addLike`,data).then((res)=>{console.log
             }}
           >
             <Marker coordinate={rbk} />
+
           </MapView>
         </View>
         <TouchableOpacity

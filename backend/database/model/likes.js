@@ -26,9 +26,10 @@ module.exports = {
           callback(error, results);
         });  
       },
-      deleteOne: function(callback,liked_id) {
-        const sql = 'DELETE FROM liked WHERE id = ?' 
-        conn.query(sql,liked_id,function (error, results ) {
+      deleteOne: function(callback,likedInfo) {
+        const { user_id, event_id } = likedInfo;
+        const sql = 'DELETE FROM liked WHERE user_id = ? AND event_id = ?;' 
+        conn.query(sql,[user_id, event_id],function (error, results ) {
           callback(error, results);
         });
       }

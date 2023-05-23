@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { AntDesign } from '@expo/vector-icons';
 import {
   ScrollView,
   SafeAreaView,
@@ -29,6 +30,8 @@ import { Divider } from "native-base";
 export default function ProfileScreen() {
   const navigation = useNavigation();
   const { updateUser, user } = useContext(AuthContext);
+  const [delte, updateDeleted] = useState(false);
+
   const { isOpen, onOpen, onClose } = useDisclose();
   const { setProfileIMG } = useContext(AuthContext);
   const { profileIMG } = useContext(AuthContext);
@@ -36,11 +39,12 @@ export default function ProfileScreen() {
   const windowWidth = Dimensions.get("window").width;
   const { signOut } = useContext(AuthContext);
 
+
   const handleLogout = async () => {
     try {
       await signOut();
       navigation.navigate("Login")
-    
+
     } catch (error) {
       console.log("Error logging out:", error);
     }
@@ -70,7 +74,7 @@ export default function ProfileScreen() {
       setProfileIMG(uri);
     }
   };
- 
+
   const takePhoto = async () => {
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
@@ -119,9 +123,14 @@ export default function ProfileScreen() {
   const handlenavtoedit = () => {
     navigation.navigate("setting");
   };
-const handleFavoUser=()=>{
-  navigation.navigate("liked")
-}
+  const handleFavoUser = () => {
+    updateDeleted(!delte)
+    navigation.navigate("liked" , {delete: delte})
+    
+
+  }
+
+  console.log(delte, "sddddddddddddddddd");
   return (
     <SafeAreaView style={tailwind`flex-1 bg-black`}>
       <ScrollView
@@ -131,7 +140,7 @@ const handleFavoUser=()=>{
           alignItems: "center",
         }}
       >
-        <Pressable style={{flexDirection:"column-reverse" , marginLeft:350}} onPress={handleLogout}>
+        <Pressable style={{ flexDirection: "column-reverse", marginLeft: 350 }} onPress={handleLogout}>
           <MaterialIcons name="logout" size={24} color="#fff" />
         </Pressable>
         <View style={{ flex: 1 }}>
@@ -185,15 +194,15 @@ const handleFavoUser=()=>{
               bg: "muted.50",
             }}
           />
-          <View style={{borderRadius:25,}}>
-          <Text style={styles.userInfoSubTitle}>{user.email}</Text>
+          <View style={{ borderRadius: 25, }}>
+            <Text style={styles.userInfoSubTitle}>{user.email}</Text>
           </View>
           <Text style={styles.userInfoSubTitle}>{user.phone_number}</Text>
         </View>
         <Pressable style={tailwind`flex-row gap-2 px-8 mr-63 mt-20`} onPress={handleFavoUser}>
           {/* setting help */}
-          <Entypo name="ticket" size={24} color="white" />
-          <Text style={tailwind`text-white text-lg `}>event's</Text>
+          <AntDesign name="like2" size={24} color="white" />
+          <Text style={tailwind`text-white text-lg `}  >LIKED</Text>
         </Pressable>
         <Pressable style={tailwind`flex-row  gap-2 px-8 mr-66 p-5`}>
           <Ionicons name="help-buoy-outline" size={24} color="#fff" />

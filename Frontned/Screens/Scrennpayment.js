@@ -28,7 +28,7 @@ export default function Scrennpayment({ route }) {
 console.log(user);
 
   const handlTicktBuy = () => {
-    axios.post(`http://${URL}:5000/api/booking/addbooking`, { user_id });
+    axios.post(`http://${URL}:5001/api/booking/addbooking`, { user_id });
   };
 
   return (

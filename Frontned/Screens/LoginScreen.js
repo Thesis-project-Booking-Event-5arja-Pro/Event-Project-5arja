@@ -42,7 +42,7 @@ const LoginScreen = () => {
   const Login = () => {
     
     axios
-      .post(`http://${URL}:5000/api/user/singin`, {
+      .post(`http://${URL}:5001/api/user/singin`, {
         email: email.trim(),
         password: password,
       })

@@ -22,11 +22,10 @@ module.exports = {
     },
 
  deleteOneliked: function(req, res) {
-    console.log(req.params.idliked);
         liked.deleteOne(function(err, results) {
             if(err) res.status(500).send(err);
             else res.json(results)
-        },[req.params.id])
+        },req.body)
     
     }
 }

@@ -49,7 +49,7 @@ const RegisterScreen = () => {
       img: profileIMG,
     };
     axios
-      .post(`http://${URL}:5000/api/user/addUser`, info)
+      .post(`http://${URL}:5001/api/user/addUser`, info)
       .then((res) => {
         console.log("hi im clinet posed" + res);
         AsyncStorage.setItem("token", res.data);
