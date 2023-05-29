@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
 
   const signOut = async () => {
     try {
-      // Clear the user token and other relevant state
+     
       await AsyncStorage.removeItem("userToken");
       setUser("");
       setToken("");

@@ -42,12 +42,14 @@ module.exports = {
       callback(error, results);
     });
   },
-  updateOne: function (email, firstName, phoneNumber, callback) {
-    const sql = "UPDATE `user` SET username   = ?, phone_number = ? WHERE email = ?";
-    conn.query(sql,[firstName, phoneNumber, email], function (err, results) {
+  updateOne: function (email, username, phoneNumber, hashedPassword, callback) {
+    const sql = "UPDATE `user` SET username = ?, phone_number = ?, password = ? WHERE email = ?";
+    conn.query(sql, [username, phoneNumber, hashedPassword, email], function (err, results) {
       callback(err, results);
     });
   },
+  
+  
   updatePassword: function (email, hashedPassword, callback) {
     const sql = "UPDATE `user` SET password = ? WHERE email = ?";
     conn.query(sql, [hashedPassword, email], function (err, results) {

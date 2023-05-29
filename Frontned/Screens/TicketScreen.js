@@ -61,8 +61,8 @@ const TicketScreen = ({ route }) => {
 
 
   };
+console.log(user);
 
- 
   const addlicked = () => {
     const data = {
       user_id: user.user_id,

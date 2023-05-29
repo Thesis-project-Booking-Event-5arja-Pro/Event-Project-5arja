@@ -26,7 +26,7 @@ module.exports = {
         });  
       },
       deleteOne: function(callback,idevent) {
-        const sql = 'DELETE FROM event WHERE id = ?' 
+        const sql = 'DELETE FROM liked WHERE user_id = ? AND event_id = ?' 
         conn.query(sql,idevent,function (error, results ) {
           callback(error, results);
         });

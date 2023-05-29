@@ -3,10 +3,10 @@ import { Text, View, ImageBackground, FlatList } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 const DATA = [
-    { id: '1', title: 'https://welcometoibiza.com/wp-content/uploads/fiesta-afterlife-ibiza-tale-of-us-hi-ibiza-2023-welcometoibiza-1200x1500.jpg', latitude: 45.8942635655478289, longitude: 10.18710378287, date: "2023-05-25" },
+    { id: '1', title: 'https://welcometoibiza.com/wp-content/uploads/fiesta-afterlife-ibiza-tale-of-us-hi-ibiza-2023-welcometoibiza-1200x1500.jpg', latitude: 45.8942635655478289, longitude: 10.18710378287, date: "2023-05-30" },
     { id: '2', title: 'https://prolux.lighting/wp-content/uploads/2021/12/konczert-tale-of-us-v-kieve-14.jpg', latitude: 36.89426356478289, longitude: 10.18710378287, date: "2023-05-26" },
-    { id: '3', title: 'https://cdn.sanity.io/images/ifm9m55z/production/ecbb684527dd250c0e23c905276f3be4d50033b6-4800x6000.jpg', latitude: 36.89426356478289, longitude: 10.18710378287, date: "2023-08-22" },
-    { id: '4', title: 'https://cdn.sanity.io/images/ifm9m55z/production/ecbb684527dd250c0e23c905276f3be4d50033b6-4800x6000.jpg', latitude: 36.89426356478289, longitude: 10.18710378287, date: "2023-08-21" },
+    { id: '3', title: 'https://cdn.sanity.io/images/ifm9m55z/production/ecbb684527dd250c0e23c905276f3be4d50033b6-4800x6000.jpg', latitude: 36.89426356478289, longitude: 10.18710378287, date: "2023-08-30" },
+    { id: '4', title: 'https://cdn.sanity.io/images/ifm9m55z/production/ecbb684527dd250c0e23c905276f3be4d50033b6-4800x6000.jpg', latitude: 36.89426356478289, longitude: 10.18710378287, date: "2023-08-30" },
     { id: '5', title: 'Item 5' },
 ];
 
@@ -19,7 +19,7 @@ const Soon = () => {
         return (
             <View style={{}}>
                 <ImageBackground source={{ uri: item.title }} style={{ width: 250, height: 200, marginLeft: 15, borderRadius: 5 }}>
-                    <Text style={{ color: 'white', fontSize: 18 }}>{item.date}</Text>
+                    {/* <Text style={{ color: 'white', fontSize: 18 }}>{item.date}</Text> */}
                 </ImageBackground>
             </View>
         );

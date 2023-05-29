@@ -18,47 +18,126 @@ import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
 import { Video, ResizeMode } from "expo-av";
 import { AntDesign } from "@expo/vector-icons";
 import { AuthContext, AuthProvider } from "./AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import URL from "../api/client";
 import axios from "axios";
-
+import { Avatar, Center, Actionsheet, useDisclose } from "native-base";
+import * as ImagePicker from "expo-image-picker/src/ImagePicker";
 
 const RegisterScreen = () => {
+  const { isOpen, onOpen, onClose } = useDisclose();
   const [userName, setuserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(false);
-
-  const { updateUser } = useContext(AuthContext);
+  const { setProfileIMG } = useContext(AuthContext);
   const { profileIMG } = useContext(AuthContext);
+  const { updateUser } = useContext(AuthContext);
+  const [image, setImage] = useState(null);
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled && result.assets.length > 0) {
+      const uri = result.assets[0].uri;
+      setImage(uri);
+      setProfileIMG(uri);
+    }
+  };
+
+  const takePhoto = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    });
+    if (!result.canceled && result.assets?.length > 0) {
+      const uri = result.assets[0].uri;
+      setImage(uri);
+      handleSave(uri);
+      setProfileIMG(uri);
+    } else {
+      console.log("Image selection canceled.");
+    }
+  };
+
+  const handleSave = async () => {
+    const data = new FormData();
+    data.append("profile-image", {
+      uri: image,
+      type: "image/jpeg",
+      name: "profile-image.jpg",
+    });
+    try {
+      const response = await axios.post(
+        `${URL}/api/image-upload/uploadFile`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      handleSave(uri);
+      setProfileIMG(uri);
+      setImage(response.data);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
+  const selectImage = () => {
+    onOpen();
+  };
+
   const register = () => {
     const info = {
       username: userName,
       email: email.trim(),
       password: password,
-      name:userName,
+      name: userName,
       phone_number: phone,
       img: profileIMG,
     };
     axios
-      .post(`http://${URL}:5001/api/user/addUser`, info)
-      .then((res) => {
-        console.log("hi im clinet posed" + res);
-        AsyncStorage.setItem("token", res.data);
-        updateUser(info, res.data, profileIMG);
-        navigation.replace("main");
+      .post(`http://${URL}:5001/api/user/addUser`, info).then((res) => {
+        const token = res.data?.customToken;
+        const userId = res.data?.user_id;
+
+        if (token && userId) {
+          AsyncStorage.setItem("token", token);
+          updateUser({ ...info, user_id: userId }, token, profileIMG);
+          navigation.replace("main");
+        } else {
+          console.error("Invalid response from server:", res.data);
+          Alert.alert("Registration Failed", "Invalid response from server.");
+        }
       })
       .catch((err) => {
         console.log(err);
-        Alert.alert(`${err}`);
+        Alert.alert("Registration Failed", err.message);
       });
   };
 
@@ -76,14 +155,42 @@ const RegisterScreen = () => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView>
             <View>
-              <View style={{}}>
+              <Center style={{ marginTop: 65, padding: 45, marginLeft: 25 }}>
+                <View style={{ width: 50, marginLeft: -75, borderRadius: 25 }}>
+                  <Pressable onPress={onOpen}>
+                    <Avatar
+                      bg="white"
+                      size="2xl"
+                      source={{
+                        uri: profileIMG,
+                      }}
+                    ></Avatar>
+                  </Pressable>
+
+                  <Center>
+                    <View onPress={selectImage}>
+                      <Actionsheet isOpen={isOpen} onClose={onClose}>
+                        <Actionsheet.Content>
+                          <Actionsheet.Item onPress={takePhoto}>
+                            Take Photo
+                          </Actionsheet.Item>
+                          <Actionsheet.Item onPress={pickImage}>
+                            Choose from Gallery
+                          </Actionsheet.Item>
+                        </Actionsheet.Content>
+                      </Actionsheet>
+                    </View>
+                  </Center>
+                </View>
+              </Center>
+              {/* <View style={{}}>
                 <Video
                   source={require("../unit/txt.mp4")}
-                  style={{ height: 300, width: 300 }}
+                  style={{ height: 300, width: 300,marginLeft:33 }}
                   resizeMode="cover"
                   shouldPlay
                 />
-              </View>
+              </View> */}
 
               <View
                 style={{
@@ -96,10 +203,11 @@ const RegisterScreen = () => {
               </View> */}
                 <Text
                   style={{
-                    fontSize: 18,
+                    fontSize: 20,
                     marginTop: -10,
                     fontWeight: "600",
                     color: "white",
+                    marginLeft: 25,
                   }}
                 >
                   Create a new Account
@@ -213,7 +321,7 @@ const RegisterScreen = () => {
                       backgroundColor: "orange",
                       padding: 15,
                       borderRadius: 7,
-                      marginRight: 10,
+                      marginRight: -50,
                       justifyContent: "center",
                     }}
                   >

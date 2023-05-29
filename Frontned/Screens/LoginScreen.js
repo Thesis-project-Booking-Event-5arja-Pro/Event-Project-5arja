@@ -36,7 +36,7 @@ const LoginScreen = () => {
   };
 
   const Login = () => {
-    console.log("zaeazeza");
+    
     axios
       .post(`http://${URL}:5001/api/user/singin`, {
         email: email.trim(),
@@ -46,6 +46,7 @@ const LoginScreen = () => {
         const token = res.data;
         const infoDisplay = res.data.user;
         const ImgUser = profileIMG
+        console.log(infoDisplay);
         AsyncStorage.setItem("token", token.token);
         updateUser(infoDisplay, token.token, ImgUser);
         navigation.navigate("main");
@@ -55,7 +56,7 @@ const LoginScreen = () => {
         Alert.alert("Error", "check your email or password");
       });
   };
- console.log(profileIMG);
+
   const handleForgetPassword = () => {
     navigation.navigate("forget");
   };
@@ -81,7 +82,7 @@ const LoginScreen = () => {
         <View style={{}}>
           <Video
             source={require("../unit/txt.mp4")}
-            style={{ height: 300, width: 300 }}
+            style={{ height: 300, width: 300 ,marginLeft:33}}
             resizeMode="cover"
             shouldPlay
           />

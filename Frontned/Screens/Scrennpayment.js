@@ -26,14 +26,14 @@ export default function Scrennpayment({ route }) {
   const [ticket, setTicket] = useState([]);
   const { user } = useContext(AuthContext);
 
-console.log("infopur"+infopurche.event_id);
+console.log(user.user_id,"sssssssssssssssssssssssssssssss");
 const userB={
   user_id:user.user_id,
   event_id:infopurche.event_id
 }
   const handlTicktBuy = () => {
     axios
-      .post(`http://${URL}:5000/api/booking/addbooking`, userB)
+      .post(`http://${URL}:5001/api/booking/addbooking`, userB)
       .then((res) => {
        console.log(res)
       })

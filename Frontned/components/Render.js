@@ -4,9 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const Render = ({ data }) => {
+
   const navigation = useNavigation();
 
-
+  console.log(data,"ddddddddddd");
 
   const handleSeeAllPress = () => {
     navigation.navigate('see all');
@@ -28,6 +29,7 @@ const Render = ({ data }) => {
 
   const handlefilter = () => {
     if (data) {
+      console.log(slm);
       return filtredData = data.filter((e) => e.rating > 3)
     }
     else {
@@ -67,7 +69,7 @@ const Render = ({ data }) => {
       <FlatList
         horizontal
         contentContainerStyle={{}}
-        data={handlefilter()}
+        data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />

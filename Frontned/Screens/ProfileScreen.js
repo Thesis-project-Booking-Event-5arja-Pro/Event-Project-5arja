@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
 import {
   ScrollView,
   SafeAreaView,
@@ -19,32 +19,39 @@ import { useNavigation, CommonActions } from "@react-navigation/native";
 import { auth } from "../firebase";
 import { AuthContext } from "./AuthContext";
 import * as ImagePicker from "expo-image-picker/src/ImagePicker";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { Avatar } from "native-base";
 import { Center, Actionsheet, useDisclose } from "native-base";
 import axios from "axios";
 import URL from "../api/client";
-import { Entypo } from "@expo/vector-icons";
-import Setting from "./Setting";
+import { Linking} from "react-native";
 import { Divider } from "native-base";
 export default function ProfileScreen() {
   const navigation = useNavigation();
   const { updateUser, user } = useContext(AuthContext);
   const [delte, updateDeleted] = useState(false);
-
   const { isOpen, onOpen, onClose } = useDisclose();
   const { setProfileIMG } = useContext(AuthContext);
   const { profileIMG } = useContext(AuthContext);
   const [image, setImage] = useState(null);
   const windowWidth = Dimensions.get("window").width;
   const { signOut } = useContext(AuthContext);
-
-
+  console.log(user.img);
+  const handlePhoneCall = () => {
+    const phoneUrl = `tel:${50651248}`;
+    Linking.canOpenURL(phoneUrl)
+      .then((supported) => {
+        if (supported) {
+          return Linking.openURL(phoneUrl);
+        }
+        throw new Error("Phone call not supported");
+      })
+      .catch((error) => console.log(error));
+  };
   const handleLogout = async () => {
     try {
       await signOut();
-      navigation.navigate("Login")
-
+      navigation.navigate("Login");
     } catch (error) {
       console.log("Error logging out:", error);
     }
@@ -109,7 +116,7 @@ export default function ProfileScreen() {
           },
         }
       );
-      
+
       handleSave(uri);
       setProfileIMG(uri);
       setImage(response.data);
@@ -125,13 +132,11 @@ export default function ProfileScreen() {
     navigation.navigate("setting");
   };
   const handleFavoUser = () => {
-    updateDeleted(!delte)
-    navigation.navigate("liked" , {delete: delte})
-    
+    updateDeleted(!delte);
+    navigation.navigate("liked", { delete: delte });
+  };
 
-  }
-
-  console.log(delte, "sddddddddddddddddd");
+  console.log(delte, "detttleeee");
   return (
     <SafeAreaView style={tailwind`flex-1 bg-black`}>
       <ScrollView
@@ -141,10 +146,7 @@ export default function ProfileScreen() {
           alignItems: "center",
         }}
       >
-        <Pressable style={{ flexDirection: "column-reverse", marginLeft: 350 }} onPress={handleLogout}>
-          <MaterialIcons name="logout" size={24} color="#fff" />
-        </Pressable>
-        <View style={{ flex: 1 }}>
+     <View style={{ flex: 1 }}>
           <View style={styles.container}>
             <Center>
               <View style={{ width: 50, marginLeft: -75, borderRadius: 25 }}>
@@ -153,7 +155,7 @@ export default function ProfileScreen() {
                     bg="white"
                     size="2xl"
                     source={{
-                      uri: profileIMG,
+                      uri: user.img,
                     }}
                   ></Avatar>
                 </Pressable>
@@ -175,7 +177,6 @@ export default function ProfileScreen() {
               </View>
             </Center>
 
-            <Text style={styles.userName}>{user.userName}</Text>
             <View style={styles.userBtnWrapper}>
               <View style={styles.userBtnWrapper}>
                 <TouchableOpacity style={styles.userBtn}>
@@ -195,19 +196,41 @@ export default function ProfileScreen() {
               bg: "muted.50",
             }}
           />
-          <View style={{ borderRadius: 25, }}>
+          <View style={{ borderRadius: 25 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                color: "white",
+                textAlign: "center",
+                padding: 15,
+                fontSize: 25,
+              }}
+            >
+              {user.username}
+            </Text>
             <Text style={styles.userInfoSubTitle}>{user.email}</Text>
           </View>
           <Text style={styles.userInfoSubTitle}>{user.phone_number}</Text>
         </View>
-        <Pressable style={tailwind`flex-row gap-2 px-8 mr-63 mt-20`} onPress={handleFavoUser}>
+        <Pressable
+          style={tailwind`flex-row gap-2 px-8 mr-63 mt-20`}
+          onPress={handleFavoUser}
+        >
           {/* setting help */}
           <AntDesign name="like2" size={24} color="white" />
-          <Text style={tailwind`text-white text-lg `}  >LIKED</Text>
+          <Text style={tailwind`text-white text-lg `}>LIKED</Text>
         </Pressable>
         <Pressable style={tailwind`flex-row  gap-2 px-8 mr-66 p-5`}>
-          <Ionicons name="help-buoy-outline" size={24} color="#fff" />
-          <Text style={tailwind`text-white text-lg`}>Help</Text>
+          <Ionicons name="call" size={24} color="#fff" onPress={handlePhoneCall} />
+          <Text style={tailwind`text-white text-lg max-w-`} >contact us</Text>
+        </Pressable>
+        <Pressable
+          style={tailwind`flex-row  gap-2 px-8 mr-66 p-5`}
+          onPress={handleLogout}
+        >
+          <MaterialIcons name="logout" size={24} color="#fff" />
+          <Text style={tailwind`text-white text-lg`}>Logout</Text>
+         
         </Pressable>
       </ScrollView>
     </SafeAreaView>
@@ -231,7 +254,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     color: "white",
-    textAlign: "center",
   },
   aboutUser: {
     fontSize: 12,
@@ -254,6 +276,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 12,
     marginHorizontal: 5,
+    marginTop: 35,
   },
   userBtnTxt: {
     textAlign: "center",

@@ -26,15 +26,22 @@ const MyTickets = () => {
   const [showModal3, setShowModal3] = useState(false);
   const email = user.email;
 
+
+console.log('azea');
+
   useEffect(() => {
     axios
-      .get(`http://${URL}:5000/api/booking/${email}`)
+      .get(`http://${URL}:5001/api/booking/${email}`)
       .then((res) => {
+        console.log(user.user_id+'user id');
         setMyTickets(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
 
+
+  console.log(myTickets,"ssssssssssssssss");
+  console.log(email);
   const printToFile = async (item) => {
     const html = `
     <html>
@@ -144,8 +151,8 @@ const MyTickets = () => {
     const { uri } = await Print.printToFileAsync({ html });
     console.log('File has been saved to:', uri);
     await shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
-  };
-
+  }
+console.log(myTickets);
   return (
     <SafeAreaView
       style={{
@@ -163,7 +170,7 @@ const MyTickets = () => {
       <FlatList
         style={styles.container}
         data={myTickets}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.event_id}
         renderItem={({ item }) => (
           <View>
             <View style={styles.imageBg}>
@@ -176,16 +183,16 @@ const MyTickets = () => {
                 }}
               >
                 <Image style={styles.itemImage} source={{ uri: item.img }} />
-                <View style={{ position: "absolute", top: 25 }}></View>
+                <View style={{ top: 25 }}></View>
                 <View style={styles.itemInner}>
                   <Text style={styles.itemName}>{item.title}</Text>
                   <Text style={styles.itemSaleOff}>{item.price} DT</Text>
                 </View>
               </View>
             </View>
-            <Center>
+            
               <Button
-                style={{ position: "absoluter" }}
+                style={{ position: "absolute",marginTop:50 ,backgroundColor:"black",fontSize:15}}
                 onPress={() => setShowModal(true)}
               >
                 Check your Ticket
@@ -197,7 +204,7 @@ const MyTickets = () => {
                   size="lg"
                 >
                   <Modal.Content
-                    style={{ backgroundColor: "black" }}
+                    style={{ backgroundColor: "transparent" }}
                     maxWidth="350"
                   >
                     <Modal.CloseButton />
@@ -223,13 +230,13 @@ const MyTickets = () => {
                         style={{ color: "white", backgroundColor: "gray" }}
                         onPress={() => printToFile(item)} // Pass the item data as a parameter
                       >
-                        Continue
+                      Download it 👌
                       </Button>
                     </Modal.Footer>
                   </Modal.Content>
                 </Modal>
               </View>
-            </Center>
+        
           </View>
         )}
         ListEmptyComponent={() => (
@@ -258,9 +265,12 @@ const styles = StyleSheet.create({
   },
   textHeader: {
     fontWeight: "bold",
-    fontSize: 15,
-    color: "white",
+    fontSize: 35,
+    color: "orange",
     flex: 1,
+    position:"absolute",
+   marginLeft:95,
+   marginTop:50
   },
   itemImage: {
     width: (W - 60) / 2,

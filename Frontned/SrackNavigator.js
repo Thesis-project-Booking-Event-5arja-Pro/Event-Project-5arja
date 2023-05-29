@@ -20,7 +20,7 @@ import { AuthContext } from "./Screens/AuthContext";
 import ForgetPassword from "./Screens/ForgetPassword";
 import Qrpurche from "./Screens/Qrpurche.js"
 import MyTickets from "./Screens/MyTickets";
-
+import Liked  from "./Screens/Liked"
 
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -78,6 +78,7 @@ const StackNavigator = () => {
           name="Login"
           component={LoginScreen}
           options={{
+            headerShown: false,
             tabBarButton: () => null, // Hide the tab button
             tabBarLabelStyle: { display: "none" }, // Hide the tab label
           }}
@@ -86,6 +87,15 @@ const StackNavigator = () => {
           name="forget"
           component={ForgetPassword}
           options={{
+            tabBarButton: () => null, // Hide the tab button
+            tabBarLabelStyle: { display: "none" }, // Hide the tab label
+          }}
+        />
+              <Tab.Screen
+          name="liked"
+          component={Liked}
+          options={{
+            headerShown: false,
             tabBarButton: () => null, // Hide the tab button
             tabBarLabelStyle: { display: "none" }, // Hide the tab label
           }}

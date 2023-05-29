@@ -7,7 +7,7 @@ import {  View,
   Alert,
 } from "react-native";
 import QRCode from "react-native-qrcode-svg";
-
+import { useNavigation } from "@react-navigation/native";
 
 
 const Qrpurche = ({ route }) => {
@@ -17,7 +17,10 @@ const Qrpurche = ({ route }) => {
   const qrData = JSON.stringify();
   const ref = useRef();
   const start = event.start_time.slice(11, 16);
-
+  const navgation=useNavigation()
+const handlepress=()=>{
+  navgation.navigate("Home")
+}
   const captureScreenshot = async () => {
     try {
       const uri = await ref.current.capture();
@@ -36,9 +39,9 @@ const Qrpurche = ({ route }) => {
         source={{
           uri: event.img,
         }}
-        style={styles.imageBackground}
+        style={styles.imageBackground} 
       >
-        <Text style={styles.headerText}>Here is your ticket</Text>
+        <Text style={styles.headerText} onPress={handlepress}>Here is your ticket</Text>
         <Text style={styles.text}>date start : {start}</Text>
         <Text style={styles.text}>Place:{event.location}</Text>
         <QRCode value={qrData} size={200} />
